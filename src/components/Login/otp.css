@@ -1,0 +1,29 @@
+.inputStyle{
+    width: 50% !important;
+    height: 60px;
+    border-radius: 7px;
+    border: 0px;
+    margin-left: 1px;
+    margin-right: 0px;
+    background:#27363B;
+    font-size: 20px;
+    outline: none;
+}
+/* toasfy */
+.toast-container {
+    background-color: #22292b;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+  }
+  
+  .toast-body {
+    font-style: italic;
+    font-weight: bold;
+    text-align: center;
+  }
+ 
+  
+  
+  
+  
