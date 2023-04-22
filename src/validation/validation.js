@@ -24,6 +24,46 @@ mobile: Yup.string()
 
 
 
+
+
+
+
+export const profileNameSchema = Yup.object().shape({
+  name: Yup.string()
+    .required('Name is required')
+    .test(
+      'no-leading-trailing-spaces',
+      'Name should not have leading or trailing spaces',
+      (value) => {
+        if (value && (value !== value.trim())) {
+          return false;
+        }
+        return true;
+      }
+    )
+    .min(2, 'Name must be at least 2 characters')
+    .max(50, 'Name must be at most 50 characters')
+    .matches(/^[a-zA-Z\s]+$/, 'Name can only contain letters and spaces'),
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export const otpValidationSchema = Yup.object().shape({
   otp: Yup.string()
     .required('OTP is required')

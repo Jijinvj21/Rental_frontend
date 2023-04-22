@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import UseUserToken from '../../customeHooks/useUserToken'
-import { imageValidationSchema } from '../../validation/validation';
+import { imageValidationSchema , profileNameSchema } from '../../validation/validation';
 import axios from '../../instance/axios';
 import {  toast } from 'react-toastify';
 
@@ -47,8 +47,11 @@ if(urlPattern.test(image)){
 }else{
     imageValidationSchema.validate({ image: image })
     .then(async () => {
-               
-setUplod(false)
+        profileNameSchema.validate({ user: user })
+        .then(async () => { 
+
+
+            setUplod(false)
 
                 await axios.post('/profileUpdate', userProfile, {
                     headers: {
@@ -65,6 +68,12 @@ setUplod(false)
                     toast(`${error.response.data.message}`);
                     setUplod(true)
                 })
+
+        }).catch((err) => { 
+            toast(`${err}`);
+        })
+               
+
 
     }).catch((err) => { 
         toast(`${err}`);

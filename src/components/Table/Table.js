@@ -31,7 +31,7 @@ function Table(props) {
  <Search/>
  <Limit/>
       </div>
-      <div className="w-full mb-8  rounded-lg shadow-lg     ">
+      { props?.nodatamsg?props.nodatamsg: <div className="w-full mb-8  rounded-lg shadow-lg     ">
         <div className="w-full           ">
           <table className="w-full">
             <thead>
@@ -50,7 +50,7 @@ function Table(props) {
             </tbody>
           </table>
         </div>
-      </div>
+      </div>}
       <Pagination/>
     </section>
   )

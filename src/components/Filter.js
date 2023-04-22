@@ -25,6 +25,7 @@ function Filter(props) {
     const getAllUser = async () => {
       dispatch(data(''));
       try {
+        
         const url = await axios.post(
           `/filter/filter?page=${tableManagement.page ? tableManagement.page : ""}&sort=${tableManagement.sort ? tableManagement.sort : ""}&order=${tableManagement.order ? tableManagement.order : ''}&search=${tableManagement.search}&limit=${tableManagement.limit ? tableManagement.limit : ''}&tokenOf=${partinlowercase}&state=${props?.state?props?.state:''}`,
           { data: props?.props },

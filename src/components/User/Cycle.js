@@ -44,6 +44,12 @@ function Cycle(props) {
       try {
         dispatch(to(toDate));
       dispatch(from(formDate));
+      const date={
+        from:formDate,
+        to:toDate
+      }
+      const jsonString =  JSON.stringify(date);
+        localStorage.setItem('userDate',jsonString)
     } catch (error) {
       toast(`${error.message}`);
         dispatch(to(formDate));

@@ -31,7 +31,7 @@ function App() {
 
 
   return (
-    <div className="App bg-bgColor text-txtColor font-txtFont text-xl min-h-screen flex flex-col justify-between ">
+    <div className="App bg-bgColor text-txtColor font-txtFont text-xl min-h-screen flex flex-col justify-between  ">
      
      <ToastContainer {...toastConfig} />
       <BrowserRouter>

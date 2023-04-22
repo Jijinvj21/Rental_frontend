@@ -10,6 +10,7 @@ import Vlogin from '../pages/vendor/login'
 import ProductTable from '../pages/vendor/ProductTable'
 import Accessories from '../pages/vendor/Accessories'
 import Order from '../pages/vendor/Order'
+import Chat from '../components/chat/Chat'
 
 
 function Ventor() {
@@ -26,6 +27,7 @@ function Ventor() {
 <Route path='/product_table' element={<ProductTable/>}/>
 <Route path='/accessories_table' element={<Accessories/>}/>
 <Route path='/order' element={<Order/>}/>
+<Route path='/chat' element={<Chat/>}/>
 
 </Route>
         </Route>

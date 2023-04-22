@@ -99,7 +99,7 @@ function  Order() {
   })
  
   return (
-    <div className='overflow-auto h-screen  w-screen  pt-14 ' >
+    <div className='overflow-auto   w-screen  pt-14 ' >
       <Filter props={'booking'} />
       <User users={table}/>
      

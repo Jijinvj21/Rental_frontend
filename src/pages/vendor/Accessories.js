@@ -185,7 +185,7 @@ function UserTable() {
  ;
 
     return (
-        <div className='overflow-auto h-screen' style={{ width: "100%" }}><User users={table} btn={btn} />
+        <div className='overflow-auto h-screen' style={{ width: "100%" }}><User users={table} btn={btn} nodatamsg={ user? '':<div className='flex  min-h-[600px]   justify-center items-center'><p className=' text-center '> NO DATA ARE AVAILABLE</p></div>}/>
            
             <Filter props={"accessories"}  />
 
