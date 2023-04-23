@@ -1,7 +1,6 @@
 import React from 'react'
 
 function Conversation({ userList,close }) {
-  console.log(userList);
   return (
     <div>
       {
