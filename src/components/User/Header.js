@@ -104,6 +104,9 @@ function Header() {
                                                 <NavLink to='/user_order'>
                                                     <li>BOOKED</li>
                                                 </NavLink>
+                                                <NavLink to='/review'>
+                                                    <li>REVIEWS</li>
+                                                </NavLink>
                                                 <li onClick={handieLogout}>LOGOUT</li>
                                             </ul>
                                         </div>

@@ -1,4 +1,4 @@
-import React, {  useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import ReactStar from 'react-rating-stars-component'
 import Modal from '../Table/Modal'
@@ -15,21 +15,92 @@ import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 function SingleCycle() {
   let date = localStorage.getItem('userDate')
+
   let jsonData = JSON.parse(date)
   const location = useLocation()
 
   const [totalprice, setTotalprice] = useState(location.state.price + location.state?.securityDeposit)
-
-
-
   UseUserToken()
   localStorage.getItem('user');
   const [rating, setRating] = useState({
     starRating: '',
     review: ''
   })
+  const [userBooked, setUserBooked] = useState(true)
+  const [review ,setReview]=useState()
+  const [message, setMessage] =useState(false)
+
+  useEffect(() => {
+
+    axios.post(`/review/userBooked`,
+      {
+        token: localStorage.getItem('user'),
+        cycle: location.state._id,
+      })
+      .then(() => {
+        console.log(data);
+        setUserBooked(true)
+      
+        axios.post(`/review/getUserReview`,
+        {
+          token: localStorage.getItem('user'),
+          productId: location.state._id,
+        })
+        .then(() => {
+console.log(11);
+          setMessage(()=>false)
+          
+      }).catch((error) => {
+        console.log(error.response.data);
+        setMessage(true)
+      })
+
+
+
+
+      }).catch((error) => {
+        console.log(error.response.data);
+        setUserBooked(false)
+
+
+     
+
+
+      })
+
+
+
+
+      axios.post(`/review/getReviews`,
+      {
+        productId: location.state._id,
+      })
+      .then((data) => {
+        console.log(data.data);
+        setReview(data.data)
+      }).catch((error) => {
+        console.log(error.response.data);
+      })
+
+
+  }, [message])
+
   const handleSubmit = ((e) => {
+    setMessage(()=>false)
     e.preventDefault()
+
+    axios.post(`/review/newReview`,
+      {
+        token: localStorage.getItem('user'),
+        product: location.state._id,
+        stars: rating.starRating,
+        message: rating.review
+      })
+      .then((data) => {
+
+      })
+
+
   })
 
   function accessories() {
@@ -57,12 +128,12 @@ function SingleCycle() {
               activeColor='#27363b'
               size={40}
               count={5}
-              onChange={(e) => setRating({ ...rating, starRating: e.target.value })}
+              onChange={(e) => setRating({ ...rating, starRating: e })}
             />
           </div>
           <h1 className=" -pt-10">Share more about your Expreance</h1>
           <textarea type='text' placeholder='Review' className=' w=full m-5 bg-bgColor p-2 rounded-lg' onChange={(e) => setRating({ ...rating, review: e.target.value })} />
-          <button class="text-white      rounded-lg  shadow-lg      mt-6   bg-bgColor hover:bg-bgColor focus:ring-4 focus:ring-blue-300 font-medium  text-sm px-5 py-2.5 text-center  dark:bg-bgColor dark:hover:bg-[#30444a] dark:focus:ring-bgColor inline-flex items-center">SUBMIT</button>
+   {  !message? '':    <button  class="text-white      rounded-lg  shadow-lg      mt-6   bg-bgColor hover:bg-bgColor focus:ring-4 focus:ring-blue-300 font-medium  text-sm px-5 py-2.5 text-center  dark:bg-bgColor dark:hover:bg-[#30444a] dark:focus:ring-bgColor inline-flex items-center">SUBMIT</button>}
         </form>
       </>
     )
@@ -70,10 +141,10 @@ function SingleCycle() {
   const rentHandler = (data) => {
     data.forEach((data) => {
       let storedData = JSON.parse(localStorage.getItem('accessories'))
-      if (!storedData){  storedData = []}
-      
-       storedData.push(data._id)
-       const filteredArray = storedData.filter((value, index) => {
+      if (!storedData) { storedData = [] }
+
+      storedData.push(data._id)
+      const filteredArray = storedData.filter((value, index) => {
         return storedData.indexOf(value) === index;
       });
       const jsonString = JSON.stringify(filteredArray);
@@ -87,43 +158,31 @@ function SingleCycle() {
       }, 0);
       const date1 = new Date(jsonData.to);
       const date2 = new Date(jsonData.from);
-      
+
       const timestamp1 = date1.getTime();
       const timestamp2 = date2.getTime();
-      
+
       const difference = timestamp2 - timestamp1;
-      
+
       const result = difference / 86400000;
       let adddate
-      if(result ===0 ){
-         adddate=result+1
-      }else{
-        adddate=result
+      if (result === 0) {
+        adddate = result + 1
+      } else {
+        adddate = result
       }
-      
-      setTotalprice(price + location.state.price + location.state?.securityDeposit * adddate )
+
+      setTotalprice(price + location.state.price + location.state?.securityDeposit * adddate)
     }
-
-
-   
-
-
-
-
-
-
-
-
-
-
 
   }
 
 
 
   const handlePaymentSuccess = () => {
+    setUserBooked(true)
     const token = localStorage.getItem('user');
-    axios.post(`/booked`, { data:bookedData }, {
+    axios.post(`/booked`, { data: bookedData }, {
       headers: {
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
@@ -206,11 +265,11 @@ function SingleCycle() {
                     height: 40
 
                   }}
-                  createOrder={(data, actions) => { return actions.order.create({ purchase_units: [{ amount: { value: String(totalprice)} }] }) }}
+                  createOrder={(data, actions) => { return actions.order.create({ purchase_units: [{ amount: { value: String(totalprice) } }] }) }}
                   onApprove={async (data, actions) => {
                     await actions.order.capture()
                     handlePaymentSuccess()
-                    
+
                   }}
                   onCancel={() => {
                     toast('payment cancle')
@@ -220,7 +279,7 @@ function SingleCycle() {
                     toast('payment failed')
 
                   }} />
-                
+
               </PayPalScriptProvider>
             </div>
           </div>
@@ -229,35 +288,45 @@ function SingleCycle() {
       </div>
       <div className='p-10'>
         <div className='flex justify-between'>
-          <h1 className='pt-5'>Reviews</h1>
-          <Modal modal={starReview()} button={"ADD REVIEW"} />
+          <h1 className='pl-1'>Reviews</h1>
+          <Modal modal={starReview()} button={!userBooked ?<div className='cursor-text'>you haven't purchased this product yet</div> : !message? <div className='cursor-text'>You allready added</div> : "ADD REVIEW"} />
         </div>
         <hr class="  my-2  bg-gray-200 border-1 dark:bg-gray-700" />
 
-        <div className='grid md:grid-cols-3 grid-row   mx-auto '>
-          <div className='p-5' >JIJIN VJ</div>
+        {review?.map((data)=>{
+          return(
+            <>
+            <div className='grid md:grid-cols-3 grid-row   mx-auto '>
+          <div className='p-5' >{data?.user?.name}</div>
           <div className='flex p-5 '>
-            <svg className="h-5 w-5 ml-1  text-white" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"  >  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-            <svg className="h-5 w-5 ml-1 text-white" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"  >  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-            <svg className="h-5 w-5 ml-1 text-white" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"  >  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-            <svg className="h-5 w-5 ml-1 text-white" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"  >  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-            <svg className="h-5 w-5 ml-1 text-white" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"  >  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+          {
+    Array.from({ length: data.stars }).map((_, index) => (
+      <svg
+        key={index}
+        className="h-5 w-5 ml-1 text-white"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      >
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+      </svg>
+    ))
+  }
           </div>
-          <div className='p-5'>Though it helps many people, this medication may sometimes cause addiction. This risk may be higher if you have a substance use disorder (such as overuse of or addiction to drugs/alcohol). Take this medication exactly as prescribed to lower the risk of addiction. Ask your doctor or pharmacist for more details.</div>
+          <div className='p-5'>{data?.message}</div>
         </div>
         <hr class="  my-2  bg-gray-200 border-1 dark:bg-gray-700" />
+        </>
+          )
+        })}
 
-        <div className='grid md:grid-cols-3 grid-row   mx-auto '>
-          <div className='p-5' >JIJIN VJ</div>
-          <div className='flex p-5 '>
-            <svg className="h-5 w-5 ml-1  text-white" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"  >  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-            <svg className="h-5 w-5 ml-1 text-white" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"  >  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-            <svg className="h-5 w-5 ml-1 text-white" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"  >  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-            <svg className="h-5 w-5 ml-1 text-white" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"  >  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-            <svg className="h-5 w-5 ml-1 text-white" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"  >  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-          </div>
-          <div className='p-5'>Though it helps many people, this medication may sometimes cause addiction. This risk may be higher if you have a substance use disorder (such as overuse of or addiction to drugs/alcohol). Take this medication exactly as prescribed to lower the risk of addiction. Ask your doctor or pharmacist for more details.</div>
-        </div>
+
+
+        
+
+
 
 
 

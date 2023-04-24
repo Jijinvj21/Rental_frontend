@@ -14,11 +14,12 @@ import SingleCyclePage from '../pages/User/SingleCyclePage'
 import ProfilePage from '../pages/User/ProfilePage'
 import RentalPatnerPage from '../pages/User/RentalPatnerPage'
 import OrderConfirmPage from '../pages/User/OrderConfirmPage'
+import ReviewPage from '../pages/User/ReviewPage'
 
 
 function user() {
     return (
-        <>
+        <div className='flex flex-col justify-between min-h-screen'>
             <Routes>
                 <Route>
                     <Route path='/User/login' element={<Login />} />
@@ -35,6 +36,7 @@ function user() {
                         <Route path='/profile' element={<ProfilePage />} />
                         <Route path='/rentalpatner' element={<RentalPatnerPage />} />
                         <Route path='/user_order' element={<OrderConfirmPage />} />
+                        <Route path='/review' element={<ReviewPage />} />
                         
 
 
@@ -47,7 +49,7 @@ function user() {
                     
                 </Route>
             </Routes>
-        </>
+        </div>
     )
 }
 
