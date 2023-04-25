@@ -48,21 +48,21 @@ function RentalPatner() {
                 <div className='grid md:grid-cols-3 '>
                     <div className='flex flex-col  items-center p-5 border-2 m-5  rounded-3xl '>
                         <h1 className='p-2 md:py-5'>STEP 1</h1>
-                        <svg class="h-6 w-6 text-white" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"></path>  <circle cx="5" cy="18" r="3"></circle>  <circle cx="19" cy="18" r="3"></circle>  <polyline points="12 19 12 15 9 12 14 8 16 11 19 11"></polyline>  <circle cx="17" cy="5" r="1"></circle></svg>
+                        <svg className="h-6 w-6 text-white" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"></path>  <circle cx="5" cy="18" r="3"></circle>  <circle cx="19" cy="18" r="3"></circle>  <polyline points="12 19 12 15 9 12 14 8 16 11 19 11"></polyline>  <circle cx="17" cy="5" r="1"></circle></svg>
                         <h1 className='text-center p-1 md:py-5'>REGISTER YOUR CYCLE </h1>
                         <h1 className='text-center p-2 md:py-5'>Photos & details of your cycles
                             will be listed on our website</h1>
                     </div>
                     <div className='flex flex-col  items-center p-5 border-2 m-5 rounded-3xl'>
                         <h1 className='p-2 md:py-5'>STEP 2</h1>
-                        <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                        <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
                         <h1 className='text-center p-1 md:py-5'>YOUR CYCLE GET BOOKED </h1>
                         <h1 className='text-center p-2 md:py-5'>Customer books your cycle for
                             their need</h1>
                     </div>
                     <div className='flex flex-col  items-center p-5 border-2 m-5 rounded-3xl'>
                         <h1 className='p-2 md:py-5'>STEP 3</h1>
-                        <svg class="h-6 w-6 text-white" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" />  <path d="M12 3v3m0 12v3" /></svg>
+                        <svg className="h-6 w-6 text-white" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" />  <path d="M12 3v3m0 12v3" /></svg>
                         <h1 className='text-center p-1 md:py-5' >RECIEVE PAYMENT</h1>
                         <h1 className='text-center p-2 md:py-5'>Monthly rent of the cycle is transferred
                             directly into your bank account</h1>

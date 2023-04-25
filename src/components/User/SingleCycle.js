@@ -133,7 +133,7 @@ console.log(11);
           </div>
           <h1 className=" -pt-10">Share more about your Expreance</h1>
           <textarea type='text' placeholder='Review' className=' w=full m-5 bg-bgColor p-2 rounded-lg' onChange={(e) => setRating({ ...rating, review: e.target.value })} />
-   {  !message? '':    <button  class="text-white      rounded-lg  shadow-lg      mt-6   bg-bgColor hover:bg-bgColor focus:ring-4 focus:ring-blue-300 font-medium  text-sm px-5 py-2.5 text-center  dark:bg-bgColor dark:hover:bg-[#30444a] dark:focus:ring-bgColor inline-flex items-center">SUBMIT</button>}
+   {  !message? '':    <button  className="text-white      rounded-lg  shadow-lg      mt-6   bg-bgColor hover:bg-bgColor focus:ring-4 focus:ring-blue-300 font-medium  text-sm px-5 py-2.5 text-center  dark:bg-bgColor dark:hover:bg-[#30444a] dark:focus:ring-bgColor inline-flex items-center">SUBMIT</button>}
         </form>
       </>
     )
@@ -181,6 +181,7 @@ console.log(11);
 
   const handlePaymentSuccess = () => {
     setUserBooked(true)
+    setMessage(true)
     const token = localStorage.getItem('user');
     axios.post(`/booked`, { data: bookedData }, {
       headers: {
@@ -216,7 +217,7 @@ console.log(11);
         </div>
         <div className='pl-5 text-left w-4/6 pt-16  md:w-1/2 lg:w-full'>
 
-          <div class="flex flex-row  justify-center  py-2 drop-shadow-2xl  rounded-full w-4/6  md:w-1/2 lg:w-full  ">
+          <div className="flex flex-row  justify-center  py-2 drop-shadow-2xl  rounded-full w-4/6  md:w-1/2 lg:w-full  ">
             <input type="date" value={jsonData.from} readOnly className='bg-boxColor rounded-l-full w-30  px-5 py-1 focus:outline-none'
             />
             <input type="date" value={jsonData.to} readOnly className='bg-boxColor rounded-r-full w-30  px-5 py-1 focus:outline-none' />
@@ -239,7 +240,7 @@ console.log(11);
 
           <div className='flex justify-center  p-5'>
             <h1 className='flex text-2xl '> Total Price :
-              <svg class="h-8 w-8 text-white" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" />  <path d="M12 3v3m0 12v3" /></svg>
+              <svg className="h-8 w-8 text-white" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" />  <path d="M12 3v3m0 12v3" /></svg>
               {totalprice}
             </h1>
           </div>
@@ -291,7 +292,7 @@ console.log(11);
           <h1 className='pl-1'>Reviews</h1>
           <Modal modal={starReview()} button={!userBooked ?<div className='cursor-text'>you haven't purchased this product yet</div> : !message? <div className='cursor-text'>You allready added</div> : "ADD REVIEW"} />
         </div>
-        <hr class="  my-2  bg-gray-200 border-1 dark:bg-gray-700" />
+        <hr className="  my-2  bg-gray-200 border-1 dark:bg-gray-700" />
 
         {review?.map((data)=>{
           return(
@@ -317,7 +318,7 @@ console.log(11);
           </div>
           <div className='p-5'>{data?.message}</div>
         </div>
-        <hr class="  my-2  bg-gray-200 border-1 dark:bg-gray-700" />
+        <hr className="  my-2  bg-gray-200 border-1 dark:bg-gray-700" />
         </>
           )
         })}

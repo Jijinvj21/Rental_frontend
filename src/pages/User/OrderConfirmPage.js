@@ -1,14 +1,3 @@
-// import React from 'react'
-// import OrderConfirm from '../../components/User/OrderConfirm'
-
-// function OrderConfirmPage() {
-//   return (
-//     <div className=' flex justify-center items-center' ><OrderConfirm/></div>
-//   )
-// }
-
-// export default OrderConfirmPage
-
 
 
 

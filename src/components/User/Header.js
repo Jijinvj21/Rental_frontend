@@ -93,7 +93,7 @@ function Header() {
                                         }}>
                                             {
                                                 data?.image ? <img className='h-8 w-8 rounded-full  mr-1' src={data?.image} alt="example" /> :
-                                                    <svg class="h-5 w-5 my-1 mr-1 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />  <circle cx="12" cy="7" r="4" /></svg>
+                                                    <svg className="h-5 w-5 my-1 mr-1 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />  <circle cx="12" cy="7" r="4" /></svg>
                                             }
                                             {data?.name}</span>
                                         <div className={`${!dropdown && 'hidden'} absolute top-9 bg-bgColor p-5 shadow-md  rounded`}>

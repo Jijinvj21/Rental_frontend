@@ -72,7 +72,7 @@ function Cycle(props) {
                     <Limit />
                     </div>
                 </div>
-                <div class="flex justify-center items-center  drop-shadow-2xl   ">
+                <div className="flex justify-center items-center  drop-shadow-2xl   ">
                         <input onChange={handleFromDateChange} type="date" value={fromValue} className='bg-boxColor  text-sm md:text-xl opacity-70  rounded-l-full mt-2.5   md:mt-5 pt-1.5 md:p-3 pl-3 md:pl-9 focus:outline-none'
                         />
                         <input onChange={handleToDateChange} type="date" value={toValue} className='bg-boxColor  text-sm md:text-xl  opacity-70  rounded-r-full mt-2.5  md:mt-5 pt-1.5 md:p-3 pr-3 md:pr-9 focus:outline-none' />
