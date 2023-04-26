@@ -75,6 +75,17 @@ function Navbar() {
               {expand && <span className="text-white ">Vendors</span>}
             </span>
           </NavLink>
+          <NavLink
+
+            to="/admin/review">
+            <span className="text-white flex gap-1 mt-6">
+            <svg class="h-6 w-6 text-white"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+</svg>
+
+              {expand && <button className="text-white "   >Review</button>}
+            </span>
+          </NavLink>
           
           <NavLink
             onClick={() => {

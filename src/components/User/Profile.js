@@ -26,8 +26,10 @@ const handleSubmit = async (e) => {
         const urlPattern = /^https?:\/\/\S+$/;
 if(urlPattern.test(image)){
     setUplod(false)
-
-    await axios.post('/profileUpdate', userProfile, {
+    console.log(user);
+    profileNameSchema.validate({ name: user })
+    .then(async () => { 
+   await axios.post('/profileUpdate', userProfile, {
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'multipart/form-data'
@@ -43,11 +45,17 @@ if(urlPattern.test(image)){
         
         setUplod(true)
     })
+
+    }).catch((err) => { 
+        toast(`${err}`);
+    })
+
+ 
     
 }else{
     imageValidationSchema.validate({ image: image })
     .then(async () => {
-        profileNameSchema.validate({ user: user })
+        profileNameSchema.validate({ name: user })
         .then(async () => { 
 
 

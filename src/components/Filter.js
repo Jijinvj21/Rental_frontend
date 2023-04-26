@@ -10,6 +10,8 @@ import { useLocation } from 'react-router-dom';
 function Filter(props) {
   const location = useLocation();
   const from = location.pathname
+  const fromValue = useSelector((state) => state.userDataSlice.from);
+    const toValue = useSelector((state) => state.userDataSlice.to);
   const part = from.split('/');
   let token
   const userToken = props.userToken
@@ -25,10 +27,11 @@ function Filter(props) {
     const getAllUser = async () => {
       dispatch(data(''));
       try {
-        
+        const userDate = localStorage.getItem('userDate')
+        const date = JSON.parse(userDate);
         const url = await axios.post(
-          `/filter/filter?page=${tableManagement.page ? tableManagement.page : ""}&sort=${tableManagement.sort ? tableManagement.sort : ""}&order=${tableManagement.order ? tableManagement.order : ''}&search=${tableManagement.search}&limit=${tableManagement.limit ? tableManagement.limit : ''}&tokenOf=${partinlowercase}&state=${props?.state?props?.state:''}`,
-          { data: props?.props },
+          `/filter/filter?page=${tableManagement.page ? tableManagement.page : ""}&sort=${tableManagement.sort ? tableManagement.sort : ""}&order=${tableManagement.order ? tableManagement.order : ''}&search=${tableManagement.search}&limit=${tableManagement.limit ? tableManagement.limit : ''}&tokenOf=${partinlowercase}&state=${props?.state?props?.state:''}&fromDate=${date.from}&toDate=${date.to}`,
+          { data: props?.props},
           {
             headers: {
               Authorization: "Bearer " + token,
@@ -44,6 +47,6 @@ function Filter(props) {
     };
 
     getAllUser();
-  }, [tableManagement.order, tableManagement.sort, tableManagement.limit, tableManagement.search, tableManagement.page, tableManagement.status]);
+  }, [tableManagement.order, tableManagement.sort, tableManagement.limit, tableManagement.search, tableManagement.page, tableManagement.status,toValue,fromValue ]);
 }
 export default Filter

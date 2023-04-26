@@ -10,7 +10,6 @@ import UseVendorToken from '../../customeHooks/useVendorToken';
 
 function  Order() {
   const [user, setUser] = useState([])
-  UseVendorToken()
   const dispatch = useDispatch();
   const token = localStorage.getItem('admin');
 

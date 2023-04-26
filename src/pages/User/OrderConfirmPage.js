@@ -15,7 +15,7 @@ import UseVendorToken from '../../customeHooks/useVendorToken';
 
 function  Order() {
   const [user, setUser] = useState([])
-  UseVendorToken()
+  // UseVendorToken()
   const dispatch = useDispatch();
   const token = localStorage.getItem('user');
 
@@ -36,9 +36,6 @@ function  Order() {
       </button>
     )
   }
-
-
-
   function accessoriesModal(accessories) {
 
     return (
@@ -89,7 +86,7 @@ function  Order() {
  
   return (
     <div className='overflow-auto   w-screen  pt-14 ' >
-      <Filter props={'booking'} />
+      <Filter props={'cycle'} />
       <User users={table}/>
      
     </div>
@@ -100,5 +97,12 @@ export default Order
 
 
 
+// import React from 'react'
 
+// function OrderConfirmPage() {
+//   return (
+//     <div>OrderConfirmPage</div>
+//   )
+// }
 
+// export default OrderConfirmPage
