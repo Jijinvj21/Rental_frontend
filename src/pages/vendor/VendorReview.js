@@ -16,12 +16,13 @@ function  UserTable() {
   }, [tableManagement])
 
   let table = []
+  console.log(user);
   user?.map((data, index) => {
-    let { name,stars,message,product } = data
+    let { name,stars,message,product,vendor } = data
 
     let table_head = {
       User_Name: name,
-      Product:product.name,
+      Product:vendor[0]?.name,
       Rating:stars,
       Message:message,
     }

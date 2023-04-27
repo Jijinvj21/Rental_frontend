@@ -10,6 +10,8 @@ import Vlogin from '../pages/vendor/login'
 import ProductTable from '../pages/vendor/ProductTable'
 import Accessories from '../pages/vendor/Accessories'
 import Order from '../pages/vendor/Order'
+import VendorReview from '../pages/vendor/VendorReview'
+import VendorDashboard from '../pages/vendor/VendorDashboard'
 
 
 function Ventor() {
@@ -26,6 +28,8 @@ function Ventor() {
 <Route path='/product_table' element={<ProductTable/>}/>
 <Route path='/accessories_table' element={<Accessories/>}/>
 <Route path='/order' element={<Order/>}/>
+<Route path='/review' element={<VendorReview/>}/>
+<Route path='/dashboard' element={<VendorDashboard/>}/>
 
 </Route>
         </Route>

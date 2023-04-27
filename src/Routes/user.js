@@ -15,9 +15,14 @@ import ProfilePage from '../pages/User/ProfilePage'
 import RentalPatnerPage from '../pages/User/RentalPatnerPage'
 import OrderConfirmPage from '../pages/User/OrderConfirmPage'
 import ReviewPage from '../pages/User/ReviewPage'
+import PaymentSucessPage from '../pages/User/PaymentSucessPage'
+import PaymentCancle from '../pages/User/PaymentCanclePage'
+import PaymentErrors from '../pages/User/PaymentError'
+
 
 
 function user() {
+     
     return (
         <div className='flex flex-col justify-between min-h-screen'>
             <Routes>
@@ -37,6 +42,9 @@ function user() {
                         <Route path='/rentalpatner' element={<RentalPatnerPage />} />
                         <Route path='/user_order' element={<OrderConfirmPage />} />
                         <Route path='/review' element={<ReviewPage />} />
+                        <Route path='/sucess' element={<PaymentSucessPage/>} />
+                        <Route path='/cancel/:cancle' element={<PaymentCancle/>} />
+                        <Route path='/error/errors' element={<PaymentErrors/>} />
                         
 
 

@@ -1,22 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import User from '../../components/Table/Table'
-import axios from '../../instance/axios';
-import {  toast } from 'react-toastify';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Filter from '../../components/Filter'
-import { status } from '../../redux/features/dataManagementSlice';
 import Modal from '../../components/Table/Modal';
-import UseVendorToken from '../../customeHooks/useVendorToken';
 
 function  Order() {
   const [user, setUser] = useState([])
-  const dispatch = useDispatch();
-  const token = localStorage.getItem('admin');
 
   const tableManagement = useSelector(state => state.dataManagement);
-  const updateStatus = () => {
-    dispatch(status(true));
-  }
+ 
   useEffect(() => {
     setUser(() => tableManagement.data.user)
     
@@ -65,14 +57,20 @@ function  Order() {
   let table = []
   user?.map((data, index) => {
     let { cycle,user, accessories,amount, bookedFromDate,bookedToDate, status } = data
+    const date = new Date(bookedFromDate);
+const formattedBookedFromDate = date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const date2 = new Date(bookedToDate);
+const formattedBookedToDate = date2.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+
 
     let table_head = {
       Cycle_Image:<div className='flex justify-center'><img src={cycle?.image} alt="BigCo Inc. logo" className='w-14   ' /></div>,
     Cycle_Name:cycle?.name,
     User_Name:user?.name,
     Amount:amount,
-    From_Date:bookedFromDate,
-    To_Date:bookedToDate,
+    From_Date:formattedBookedFromDate,
+    To_Date:formattedBookedToDate,
     Accessories:  <Modal modal={ accessoriesModal(accessories)} button={accessoriesButton()} />,
 
       

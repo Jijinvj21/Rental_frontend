@@ -47,14 +47,7 @@ function Review() {
             })
     }
     const EditUserReview = (setdatafunction) => {
-        // setdatafunction
-// useEffect(()=>{
-    // setData({
-    //     starRating: datas.stars,
-    //         review: datas.message
-    // })
-// },[])
-        // console.log(data.stars);
+
         return (
             <Fragment>
                 <form onSubmit={handleSubmit} className='bg-boxColor flex flex-col w-full  justify-center items-center'>
@@ -71,15 +64,6 @@ function Review() {
                     </div>
                     <h1 className=" -pt-10">Share more about your Expreance</h1>
                     {/* <textarea type='text' placeholder='Review' className='w-full m-5 bg-bgColor p-2 rounded-lg' value={rating.review} onChange={(e) => setRating({ ...rating, review: e.target.value })} /> */}
-
-                    {/* <textarea 
-    type='text' 
-    placeholder='Review' 
-    className='w-full m-5 bg-bgColor p-2 rounded-lg' 
-    value={data.review} 
-    onChange={(e) => setData({...data, review: e.target.value})}
-/> */}
-
                     <textarea type='text' placeholder='Review' className=' w=full m-5 bg-bgColor p-2 rounded-lg'   value={data} onChange={(e) => setData( e.target.value)}/>
                     <button className="text-white      rounded-lg  shadow-lg      mt-6   bg-bgColor hover:bg-bgColor focus:ring-4 focus:ring-blue-300 font-medium  text-sm px-5 py-2.5 text-center  dark:bg-bgColor dark:hover:bg-[#30444a] dark:focus:ring-bgColor inline-flex items-center">SUBMIT</button>
                 </form>
@@ -108,6 +92,7 @@ function Review() {
                         </thead>
                         {
                             userReview?.map((data) => {
+                                console.log(data);
                                 const setdatafunction = ()=>{
                                     setData(data.message)
                                     setStar(data.stars)

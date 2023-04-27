@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import ReactStar from 'react-rating-stars-component'
 import Modal from '../Table/Modal'
-import { useLocation } from 'react-router-dom';
+import {  useLocation, useNavigate } from 'react-router-dom';
 import Accessories from './Accessories';
 import { toast } from 'react-toastify';
 import axios from '../../instance/axios'
@@ -15,6 +15,7 @@ import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 function SingleCycle() {
   let date = localStorage.getItem('userDate')
+  let navigate = useNavigate()
 
   let jsonData = JSON.parse(date)
   const location = useLocation()
@@ -177,7 +178,7 @@ console.log(11);
 
   }
 
-
+  let sucess= location.state?._id + 752
 
   const handlePaymentSuccess = () => {
     setUserBooked(true)
@@ -189,9 +190,11 @@ console.log(11);
         'Content-Type': 'application/json'
       }
     },).then(() => {
-      localStorage.removeItem(accessories);
+      localStorage.removeItem('accessories');
 
     })
+    navigate(`/sucess/${sucess}`)
+
   }
   let data = localStorage.getItem('accessories')
   let accessorieData = JSON.parse(data)
@@ -203,7 +206,8 @@ console.log(11);
     totalPrice: totalprice
 
   }
-
+let cancle= location.state?._id + 100
+let errors=location.state?._id + 100
   return (
     <div className='mt-24'>
 
@@ -273,12 +277,11 @@ console.log(11);
 
                   }}
                   onCancel={() => {
-                    toast('payment cancle')
+                    navigate(`/cancel/${cancle}`)
                   }}
                   on
                   onError={() => {
-                    toast('payment failed')
-
+                    navigate(`/error/${errors}`)
                   }} />
 
               </PayPalScriptProvider>

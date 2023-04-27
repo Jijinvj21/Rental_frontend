@@ -20,8 +20,6 @@ function  Order() {
   }
   useEffect(() => {
     setUser(() => tableManagement.data.user)
-    
-
   }, [tableManagement])
   function accessoriesButton() {
 
@@ -65,20 +63,29 @@ function  Order() {
 
   let table = []
   user?.map((data, index) => {
+
     let { cycle,user, accessories,amount, bookedFromDate,bookedToDate, status } = data
+    const date = new Date(bookedFromDate);
+const formattedBookedFromDate = date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const date2 = new Date(bookedToDate);
+const formattedBookedToDate = date2.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+
+
+
 
     let table_head = {
       Cycle_Image:<div className='flex justify-center'><img src={cycle?.image} alt="BigCo Inc. logo" className='w-14   ' /></div>,
     Cycle_Name:cycle?.name,
     User_Name:user?.name,
     Amount:amount,
-    From_Date:bookedFromDate,
-    To_Date:bookedToDate,
+    From_Date:formattedBookedFromDate,
+    To_Date:formattedBookedToDate,
     Accessories:  <Modal modal={ accessoriesModal(accessories)} button={accessoriesButton()} />,
 
       Status: <button className='text-white bg-bgColor hover:bg-[#24292F]/90  focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 mr-2 mb-2 '
         onClick={() => {
-          axios.post('/admin/userStatus_Update', data, {
+          axios.post('/vendor/cycleReturnStatus', {data:data._id}, {
             headers: {
               'Authorization': 'Bearer ' + token,
               'Content-Type': 'application/json'
@@ -89,7 +96,7 @@ function  Order() {
 
           });
           updateStatus()
-        }}>{status ? 'On Rend' : 'Return'}</button>
+        }}>{status ? 'On Rent' : 'Return'}</button>
     }
     table.push(table_head)
     return 0

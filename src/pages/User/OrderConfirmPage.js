@@ -1,28 +1,16 @@
 
-
-
-
-
 import React, { useEffect, useState } from 'react'
 import User from '../../components/Table/Table'
-import axios from '../../instance/axios';
-import {  toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 import Filter from '../../components/Filter'
-import { status } from '../../redux/features/dataManagementSlice';
 import Modal from '../../components/Table/Modal';
-import UseVendorToken from '../../customeHooks/useVendorToken';
 
 function  Order() {
   const [user, setUser] = useState([])
-  // UseVendorToken()
   const dispatch = useDispatch();
-  const token = localStorage.getItem('user');
 
   const tableManagement = useSelector(state => state.dataManagement);
-  const updateStatus = () => {
-    dispatch(status(true));
-  }
+  
   useEffect(() => {
     setUser(() => tableManagement.data.user)
     
@@ -66,15 +54,17 @@ function  Order() {
 
 
   let table = []
+  console.log(user);
   user?.map((data, index) => {
-    let { cycle,user, accessories,amount, bookedFromDate,bookedToDate, status } = data
+    console.log(data);
+    let { cycle,user, accessories,amount, bookedFromDate,bookedToDate, } = data
 
     let table_head = {
       Cycle_Image:<div className='flex justify-center'><img src={cycle?.image} alt="BigCo Inc. logo" className='w-14   ' /></div>,
     Cycle_Name:cycle?.name,
     User_Name:user?.name,
     Amount:amount,
-    From_Date:bookedFromDate,
+    From_Date: Date.now(bookedFromDate),
     To_Date:bookedToDate,
     Accessories:  <Modal modal={ accessoriesModal(accessories)} button={accessoriesButton()} />,
 
@@ -85,8 +75,8 @@ function  Order() {
   })
  
   return (
-    <div className='overflow-auto   w-screen  pt-14 ' >
-      <Filter props={'cycle'} />
+    <div className='overflow-auto  w-screen  pt-14 ' >
+      <Filter props={'booking'} />
       <User users={table}/>
      
     </div>

@@ -40,16 +40,17 @@
 import { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 
-const PieChart = () => {
+const PieChart = (props) => {
+  // console.log(props.data.data.returnCount bookedCount    );
   const chartRef = useRef();
 
   useEffect(() => {
     const chartInstance = new Chart(chartRef.current, {
       type: "pie",
       data: {
-        labels: ["Social", "Search Engines", "Direct", "Other"],
+        labels: ["Return", "OnRent"],
         datasets: [{
-          data: [260, 125, 54, 146],
+          data: [props.data?.data?.returnCount, props.data?.data?.bookedCount,],
           backgroundColor: [
             "#007bff",
             "#28a745",
