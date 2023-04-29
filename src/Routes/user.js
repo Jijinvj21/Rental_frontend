@@ -24,7 +24,7 @@ import PaymentErrors from '../pages/User/PaymentError'
 function user() {
      
     return (
-        <div className='flex flex-col justify-between min-h-screen'>
+        <div className='flex flex-col justify-between min-h-screen '>
             <Routes>
                 <Route>
                     <Route path='/User/login' element={<Login />} />

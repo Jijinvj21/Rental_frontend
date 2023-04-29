@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react'
-
 import ReactStar from 'react-rating-stars-component'
 import Modal from '../Table/Modal'
 import {  useLocation, useNavigate } from 'react-router-dom';
 import Accessories from './Accessories';
-import { toast } from 'react-toastify';
 import axios from '../../instance/axios'
 import UseUserToken from '../../customeHooks/useUserToken';
 import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js';
-
-
-
 
 
 function SingleCycle() {
@@ -48,30 +43,16 @@ function SingleCycle() {
           productId: location.state._id,
         })
         .then(() => {
-console.log(11);
           setMessage(()=>false)
           
       }).catch((error) => {
         console.log(error.response.data);
         setMessage(true)
       })
-
-
-
-
       }).catch((error) => {
         console.log(error.response.data);
         setUserBooked(false)
-
-
-     
-
-
       })
-
-
-
-
       axios.post(`/review/getReviews`,
       {
         productId: location.state._id,
@@ -82,8 +63,6 @@ console.log(11);
       }).catch((error) => {
         console.log(error.response.data);
       })
-
-
   }, [message])
 
   const handleSubmit = ((e) => {
@@ -101,20 +80,19 @@ console.log(11);
 
       })
 
-
   })
 
   function accessories() {
 
     return (
-      <button className='m-2 bg-boxColor p-2 rounded-full w-full ' >
+      <button className='m-2 bg-boxColor p-2 rounded-full w-full text-sm ' >
         Add accessories
       </button>
     )
   }
   function terms() {
     return (
-      <button className='m-2 bg-boxColor p-2 rounded-full w-full  ' >
+      <button className='m-2 bg-boxColor p-2 rounded-full w-full text-sm   ' >
         Terms and condition
       </button>
     )
@@ -211,22 +189,22 @@ let errors=location.state?._id + 100
   return (
     <div className='mt-24'>
 
-      <div className='grid  grid-col md:grid-cols-2 text-center '>
-        <div className='w-4/6  md:w-1/2 lg:w-full mx-auto p-5'>
+      <div className='grid  grid-col lg:grid-cols-2 text-center  '>
+        <div className='w-full flex justify-center  lg:w-full mx-auto md:p-5'>
           <img
             src={location?.state?.image}
             alt="new"
             className='w-4/6  md:w-1/2 lg:w-full rounded-2xl'
           />
         </div>
-        <div className='pl-5 text-left w-4/6 pt-16  md:w-1/2 lg:w-full'>
+        <div className='md:pl-5 text-left w-4/6 pt-16  md:w-1/2 lg:w-full mx-auto'>
 
-          <div className="flex flex-row  justify-center  py-2 drop-shadow-2xl  rounded-full w-4/6  md:w-1/2 lg:w-full  ">
-            <input type="date" value={jsonData.from} readOnly className='bg-boxColor rounded-l-full w-30  px-5 py-1 focus:outline-none'
+          <div className="flex flex-row  justify-center  my-2 drop-shadow-2xl  rounded-full w-sull md:w-full  lg:w-full mx-auto ">
+            <input type="date" value={jsonData.from} readOnly className='bg-boxColor text-sm md:text-lg rounded-l-full w-30  px-5 py-1 focus:outline-none'
             />
-            <input type="date" value={jsonData.to} readOnly className='bg-boxColor rounded-r-full w-30  px-5 py-1 focus:outline-none' />
+            <input type="date" value={jsonData.to} readOnly className='bg-boxColor rounded-r-full w-30 text-sm md:text-lg px-5 py-1 focus:outline-none' />
           </div>
-          <div className='grid grid-cols-2 py-2 pr-5'>
+          <div className='grid grid-cols-2 md:py-2 pr-5 '>
             <div>
               <h1 className='pb-2'>Name :{location.state?.name}</h1>
 
@@ -235,10 +213,10 @@ let errors=location.state?._id + 100
               <h1 className='pb-2'>Security deposit :{location.state?.securityDeposit}</h1>
             </div>
             <div className=' flex flex-col ml-auto '>
-              <h1 className='pb-2'>Speed :{location.state?.speed}</h1>
-              <h1 className='pb-2'>Type :{location.state?.type}</h1>
-              <h1 className='pb-2'>Break :{location.state?.breaks}</h1>
-              <h1 className='pb-2'>Tyre size :{location.state?.tyreSize}</h1>
+              <h1 className='pb-2 text-right'>Speed :{location.state?.speed}</h1>
+              <h1 className='pb-2 text-right'>Type :{location.state?.type}</h1>
+              <h1 className='pb-2 text-right'>Break :{location.state?.breaks}</h1>
+              <h1 className='pb-2 text-right'>Tyre size :{location.state?.tyreSize}</h1>
             </div>
           </div>
 
@@ -249,15 +227,15 @@ let errors=location.state?._id + 100
             </h1>
           </div>
 
-          <div className='flex flex-row p-5 justify-between '>
-            <div className='w-1/2 pr-3'>
+          <div className='flex flex-col md:flex-row md:p-5 justify-between '>
+            <div className='md:w-1/2 md:pr-3'>
 
               {<Modal modal={<Accessories rentHandler={rentHandler} data={location.state} />} button={accessories()} />}
 
               {<Modal modal={location.state?.terms} button={terms()} />}
             </div>
 
-            <div className='z-0 w-1/2 pt-2'>
+            <div className='z-0 md:w-1/2 pt-2'>
 
               <PayPalScriptProvider options={{ "client-id": "AUph16OQlgs0Af8jR_YZyxgY88VLPyPVk_qU_MJUZ1O0b9y4VZ0Zxb7wFcxDd3n5YufGHhRTbSuFytNW" }}>
                 <PayPalButtons

@@ -7,13 +7,15 @@ import Sort from './Sort';
 
 
 
+
 function Table(props) {
+ 
   let headings = []
   const userDetails = props.users[0]
   for (let item in userDetails) {
     headings.push(item)
   }
-  const tableData = props.users.map((item, i) => {
+  const tableData = props.users?.map((item, i) => {
     return (
       <tr >
         {headings.map(element => {
@@ -25,13 +27,17 @@ function Table(props) {
     )
   })
   return (
-    <section className="container mx-auto p-6 font-mono           ">
+    <section className="container mx-auto p-6 font-mono">
        {props?.btn?.btn}
-      <div className='flex justify-between   '>
+      <div className='flex justify-between '>
+        <div className=' w-full'>
  <Search/>
+        </div>
+        <div className='mb-1 pb-1 '>
  <Limit/>
+        </div>
       </div>
-      { props?.nodatamsg?props.nodatamsg: <div className="w-full mb-8  rounded-lg shadow-lg     ">
+      { props?.nodatamsg?props.nodatamsg: <div className=" overflow-auto   mb-8  rounded-lg shadow-lg ">
         <div className="w-full           ">
           <table className="w-full">
             <thead>

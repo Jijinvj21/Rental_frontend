@@ -7,7 +7,7 @@ function Pagination() {
   const dispatch = useDispatch();
   const [counter,setCounter]=useState(1)
   const i = useSelector((state) => state.dataManagement);
-  let last = i?.data.page*i.limit
+  let last = i?.data?.page*i.limit
   if (last > i?.data?.total )
   {
     last =i?.data?.total
@@ -20,10 +20,10 @@ function Pagination() {
   if(i?.data?.total ===0){
     first = 0
   }
-  const totalPage= parseInt( Math.ceil(i.data.total/i.data.limit))
+  const totalPage= parseInt( Math.ceil(i.data?.total/i.data?.limit))
 let pre
 let next
-  counter !==totalPage && counter !==0 && i.data.total ?next="inline-flex items-center px-4 py-2 text-sm font-medium  bg-boxColor rounded-l hover:bg-boxColor dark:bg-boxColor dark:border-boxColor  dark:hover:bg-[#315a5a] ":next='hidden'
+  counter !==totalPage && counter !==0 && i.data?.total ?next="inline-flex items-center px-4 py-2 text-sm font-medium  bg-boxColor rounded-l hover:bg-boxColor dark:bg-boxColor dark:border-boxColor  dark:hover:bg-[#315a5a] ":next='hidden'
   counter > 1 && first!==0 ?pre="inline-flex items-center px-4 py-2 text-sm font-medium  bg-boxColor rounded-l hover:bg-boxColor dark:bg-boxColor dark:border-boxColor  dark:hover:bg-[#315a5a] ":pre='hidden'
 const handleprevious=()=>{
   setCounter(counter-1)

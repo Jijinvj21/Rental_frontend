@@ -84,7 +84,7 @@ function Chat() {
 
     function user() {
         return (
-            <div className=' md:-mt-10  overflow-auto md:overflow-hidden scrollbar scrollbar-thumb-boxColor scrollbar-thumb-rounded-full scrollbar-w-3  '>
+            <div className=' md:-mt-10  md:overflow-hidden scrollbar scrollbar-thumb-boxColor scrollbar-thumb-rounded-full scrollbar-w-3  '>
                 <div className='  rounded-2xl     '>
                     <div className=' flex md:flex-row flex-col w-full md:p-2 items-center justify-center'>
                         <Search color={'bgColor'} />

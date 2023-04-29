@@ -336,14 +336,13 @@ if(urlPattern.test(image)){
 
   
     useEffect(() => {
-        setUser(() => tableManagement.data.user)
+        setUser(() => tableManagement.data?.user)
     }, [tableManagement])
 
     let table = []
     const btn = {
         btn: <Modal addCycleBtn={addBtn} addCycleForm={addCycle()} />
     }
-
     user?.map((data, index) => {
         let { image, quantity, securityDeposit, price, name,speed,type,breaks,tyreSize,priceinclude,terms,_id } = data
 
@@ -381,8 +380,6 @@ if(urlPattern.test(image)){
                             'Content-Type': 'application/json'
                         }
                     }).then((responce) => {
-                        
-
                         updateStatus()
                     });
                 }}>
@@ -395,7 +392,7 @@ if(urlPattern.test(image)){
    
 
     return (
-        <div className='overflow-auto h-screen' style={{  width: "100%" }}><User users={table} btn={btn} nodatamsg={ user? '':<div className='flex  min-h-[600px]   justify-center items-center'><p className=' text-center '> NO DATA ARE AVAILABLE</p></div>} />
+        <div className='w-full' ><User users={table} btn={btn} nodatamsg={ user? '':<div className='flex     justify-center items-center'><p className=' text-center '> NO DATA ARE AVAILABLE</p></div>} />
             
             <Filter props={"cycle"} />
 

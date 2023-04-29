@@ -96,9 +96,9 @@ function Cycle(props) {
                                             </a>
                                         </div>
                                     </div>
-                                    <img className="  w-full h-48" src={data.image} alt="rhcp" />
+                                    <img className=" w-64 h-48" src={data.image} alt="rhcp" />
 
-                                    <div className="  p-4 text-center bg-boxColor">
+                                    <div className=" w-64 p-4 text-center bg-boxColor">
 
                                         <div className="text-2xl pb-2 ">{data.name}</div>
                                         <span className=" text-2xl  mt-4 grid grid-cols-3">

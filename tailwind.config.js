@@ -6,17 +6,18 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-          bgColor:"#27363B ",
-          // bgColor:"#0c0d11",
+          // bgColor:"#27363B ",
+          bgColor:"#091f2c",
           txtColor:"#FFFFFF",
-          boxColor:"#417172",
-          // boxColor:"#171a25",
+          // boxColor:"#417172",
+          boxColor:"#233034",
           HeaderFooter:"#233034"
          
 
     },
     fontFamily:{
-      txtFont:['Gugi']
+    
+      txtFont:['Slab']
     },
     boxShadow: {
       '3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.3)',

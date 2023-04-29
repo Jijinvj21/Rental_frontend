@@ -93,7 +93,7 @@ if(urlPattern.test(image)){
     }
 }
     return (
-        <div className=' my-10  pt-10'>
+        <div className=' my-10  md;pt-10'>
             <div className='w-1/2 bg-boxColor p-5   mx-auto m-10 rounded-3xl '>
                 <h1 className='p-5 text-center text-3xl'>USER PROFIE</h1>
                 <form className='flex flex-col justify-center items-center  w-full  '
@@ -109,9 +109,9 @@ if(urlPattern.test(image)){
                     </div>
                         </label>
                 </div>
-                <div className='flex justify-center m-5   '>
-                    <input type="text" className='outline-none rounded-full text-center text-sm md:text-lg bg-bgColor p-2 w-1/2 md:w-64 ' value={user} onChange={(e) => { setUser(e.target.value); }} />
-                    <input type="text" readOnly className='outline-none rounded-full text-center cursor-default text-sm md:text-lg bg-bgColor p-2  w-2/4 md:w-64' value={"4789633214"} />
+                <div className='flex md:flex-row flex-col justify-center mt-5 mb-1 md:mb-3   '>
+                    <input type="text" className='outline-none rounded-full text-center text-sm md:text-lg bg-bgColor p-2 w-full md:w-44 mb-2 md:m-1 ' value={user} onChange={(e) => { setUser(e.target.value); }} />
+                    <input type="text" readOnly className='outline-none rounded-full text-center cursor-default text-sm md:text-lg bg-bgColor p-2 mb-2 md:m-1   md:w-44' value={"4789633214"} />
                 </div>
                 {upload ?
                             <button className="text-white      rounded-full  shadow-lg   mx-2    bg-bgColor hover:bg-bgColor focus:ring-4 focus:ring-blue-300 font-medium  text-sm px-5 py-2 text-center mr-2 dark:bg-bgColor dark:hover:bg-[#30444a] dark:focus:ring-bgColor inline-flex items-center">SUBMIT</button> :

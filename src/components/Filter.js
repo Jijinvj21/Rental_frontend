@@ -38,9 +38,10 @@ function Filter(props) {
               "Content-Type": "application/json",
             },
           }
-        );
+        )
+         
         dispatch(data(url?.data));
-        url ? dispatch(status(false)) : dispatch(status(""));
+        url ? dispatch(status(false)) : dispatch(status(''));
       } catch (error) {
         console.log(error);
       }

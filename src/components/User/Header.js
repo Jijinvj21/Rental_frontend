@@ -9,6 +9,7 @@ function Header() {
     const location = useLocation()
     const userData = localStorage.getItem('userData');
     const data = JSON.parse(userData);
+    console.log(data);
     const vendorData = localStorage.getItem('vendorData');
     const vendordata = JSON.parse(vendorData);
     const [dropdown, setDropdown] = useState(false)
@@ -19,6 +20,11 @@ function Header() {
         localStorage.removeItem("user");
         localStorage.removeItem("userData");
         navigate("/user/login")
+    })
+    const handieVendorLogout = (() => {
+        localStorage.removeItem('vendor')
+        localStorage.removeItem('vendorData')
+        navigate("/vendor/login")
     })
     return (
         <div>
@@ -43,7 +49,7 @@ function Header() {
                                             HOME
                                         </h1>
                                     </NavLink>
-                                   
+
 
                                     <NavLink
                                         to="/rentalpatner">
@@ -57,32 +63,32 @@ function Header() {
                             </div>
                         </div>
                         {location.pathname === '/rentalpatner' ? <>
-                        {vendordata?.name ?
-<div className='relative flex justify-center' >
-    <span className='flex border-1' onClick={() => {
-        isOpen && setIsOpen(false)
-        setVendorDropdown(prev => !prev)
-    }}>
-        
-        {vendordata.name.split(' ')[0]}</span>
-    <div className={`${!vendordropdown && 'hidden'} absolute top-9 bg-bgColor p-5 shadow-md  rounded`}>
-        <ul className='flex flex-col gap-2 text-sm'>
-            <NavLink to='/vendor/product_table'>
-                <li>DASHBOARD</li>
-            </NavLink>
-        </ul>
-    </div>
-</div> :
-<NavLink
-                            to="/vendor/login">
-                            <h1
-                                className="text-gray-300 hidden md:block  hover:bg-boxColor hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                                >
-                                LOGIN
-                            </h1>
-                        </NavLink>
-}                        
-                                </>
+                            {vendordata?.name ?
+                                <div className='relative flex justify-center' >
+                                    <span className='flex border-1' onClick={() => {
+                                        isOpen && setIsOpen(false)
+                                        setVendorDropdown(prev => !prev)
+                                    }}>
+
+                                        {vendordata.name.split(' ')[0]}</span>
+                                    <div className={`${!vendordropdown && 'hidden'} absolute top-9 bg-bgColor p-5 shadow-md  rounded`}>
+                                        <ul className='flex flex-col gap-2 text-sm'>
+                                            <NavLink to='/vendor/product_table'>
+                                                <li>DASHBOARD</li>
+                                            </NavLink>
+                                        </ul>
+                                    </div>
+                                </div> :
+                                <NavLink
+                                    to="/vendor/login">
+                                    <h1
+                                        className="text-gray-300 hidden md:block  hover:bg-boxColor hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                    >
+                                        LOGIN
+                                    </h1>
+                                </NavLink>
+                            }
+                        </>
                             :
                             <div className={data?.name ? "" : '  bg-[#27363b] p-1 rounded-md'}>
                                 {data?.name ?
@@ -223,6 +229,13 @@ function Header() {
                                     </h1>
                                 </NavLink>
                                 {location.pathname === '/rentalpatner' ? <>
+                                {
+                                    vendordata ? 
+                                    <p onClick={handieVendorLogout} className="text-gray-300 hover:bg-bg-boxColor hover:text-white block px-3 py-2 rounded-md text-base font-medium" onClick={handieLogout}>LOGOUT</p>
+
+                                    :
+                                    <>
+                                    
                                     <NavLink
                                         to="/vendor/login">
                                         <h1
@@ -232,24 +245,35 @@ function Header() {
                                         </h1>
                                     </NavLink>
                                     </>
+                                }
+                                   
+                                </>
                                     :
                                     <>
-                                        <NavLink
-                                            to="/user/login">
-                                            <h1
-                                                className="text-gray-300 hover:bg-bg-boxColor hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                                            >
-                                                LOGIN
-                                            </h1>
-                                        </NavLink>
-                                        <NavLink
-                                            to="/User/signUp">
-                                            <h1
-                                                className="text-gray-300 hover:bg-bg-boxColor hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                                            >
-                                                SIGNUP
-                                            </h1>
-                                        </NavLink>
+                                        {
+                                            data ?
+                                                <p className="text-gray-300 hover:bg-bg-boxColor hover:text-white block px-3 py-2 rounded-md text-base font-medium" onClick={handieLogout}>LOGOUT</p>
+                                                :
+                                                <>
+
+                                                    <NavLink
+                                                        to="/user/login">
+                                                        <h1
+                                                            className="text-gray-300 hover:bg-bg-boxColor hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                                                        >
+                                                            LOGIN
+                                                        </h1>
+                                                    </NavLink>
+                                                    <NavLink
+                                                        to="/User/signUp">
+                                                        <h1
+                                                            className="text-gray-300 hover:bg-bg-boxColor hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                                                        >
+                                                            SIGNUP
+                                                        </h1>
+                                                    </NavLink>
+                                                </>
+                                        }
                                     </>}
                             </div>
                         </div>

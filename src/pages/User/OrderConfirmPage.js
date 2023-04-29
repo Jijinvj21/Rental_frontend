@@ -1,19 +1,18 @@
 
 import React, { useEffect, useState } from 'react'
 import User from '../../components/Table/Table'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Filter from '../../components/Filter'
 import Modal from '../../components/Table/Modal';
 
-function  Order() {
+function Order() {
   const [user, setUser] = useState([])
-  const dispatch = useDispatch();
 
   const tableManagement = useSelector(state => state.dataManagement);
-  
+
   useEffect(() => {
     setUser(() => tableManagement.data.user)
-    
+
 
   }, [tableManagement])
   function accessoriesButton() {
@@ -28,26 +27,26 @@ function  Order() {
 
     return (
       < div className='flex flex-col  gap-4 py-5 '>
-      <div className='grid grid-cols-2 '>
-        {accessories?.map((data) => {
-          return (
-            <>
-              <img
-                src={data.image}
-                alt="new"
-                className='w-3/4 m-5  rounded-2xl'
-              />
-              <div className='text-left m-5 flex-row '>
-                <h1 className='mt-1' >Name:{data.name}</h1>
-                <h1 className='mt-1' >Size:{data.size}</h1>
-                <h1 className='mt-1'>RentPrice:{data.price}</h1>
-              
-              </div>
-            </>
-          )
-        })}
+        <div className='grid grid-cols-2 '>
+          {accessories?.map((data) => {
+            return (
+              <>
+                <img
+                  src={data.image}
+                  alt="new"
+                  className='w-3/4 m-5  rounded-2xl'
+                />
+                <div className='text-left m-5 flex-row '>
+                  <h1 className='mt-1' >Name:{data.name}</h1>
+                  <h1 className='mt-1' >Size:{data.size}</h1>
+                  <h1 className='mt-1'>RentPrice:{data.price}</h1>
+
+                </div>
+              </>
+            )
+          })}
+        </div>
       </div>
-    </div>
     )
   }
 
@@ -57,28 +56,34 @@ function  Order() {
   console.log(user);
   user?.map((data, index) => {
     console.log(data);
-    let { cycle,user, accessories,amount, bookedFromDate,bookedToDate, } = data
+    let { cycle, user, accessories, amount, bookedFromDate, bookedToDate, } = data
+    const date = new Date(bookedFromDate);
+    const formattedBookedFromDate = date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    const date2 = new Date(bookedToDate);
+    const formattedBookedToDate = date2.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+
 
     let table_head = {
-      Cycle_Image:<div className='flex justify-center'><img src={cycle?.image} alt="BigCo Inc. logo" className='w-14   ' /></div>,
-    Cycle_Name:cycle?.name,
-    User_Name:user?.name,
-    Amount:amount,
-    From_Date: Date.now(bookedFromDate),
-    To_Date:bookedToDate,
-    Accessories:  <Modal modal={ accessoriesModal(accessories)} button={accessoriesButton()} />,
+      Cycle_Image: <div className='flex justify-center'><img src={cycle?.image} alt="BigCo Inc. logo" className='w-14   ' /></div>,
+      Cycle_Name: cycle?.name,
+      User_Name: user?.name,
+      Amount: amount,
+      From_Date: formattedBookedFromDate,
+      To_Date: formattedBookedToDate,
+      Accessories: <Modal modal={accessoriesModal(accessories)} button={accessoriesButton()} />,
 
-     
+
     }
     table.push(table_head)
     return 0
   })
- 
+
   return (
-    <div className='overflow-auto  w-screen  pt-14 ' >
+    <div className=' pt-14 ' >
       <Filter props={'booking'} />
-      <User users={table}/>
-     
+      <User users={table} />
+
     </div>
     // 
   )
@@ -87,12 +92,3 @@ export default Order
 
 
 
-// import React from 'react'
-
-// function OrderConfirmPage() {
-//   return (
-//     <div>OrderConfirmPage</div>
-//   )
-// }
-
-// export default OrderConfirmPage
