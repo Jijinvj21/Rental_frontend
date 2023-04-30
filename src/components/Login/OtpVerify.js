@@ -9,9 +9,20 @@ import { token  } from '../../redux/features/vendorAuthSlice'
 import {  token as userToken } from '../../redux/features/userAuthSlice'
 import {  userData } from '../../redux/features/userAuthSlice'
 import { useDispatch } from 'react-redux';
+import UseUserToken from '../../customeHooks/useUserToken';
+import UseVendorToken from '../../customeHooks/useVendorToken';
 function OtpVerify() {
+  const location =useLocation()
+
+  if(location.pathname === "/User/Login/Otp/Verify"   || location.pathname ===  '/User/Signup/Otp/Verify'){
+      
+    UseUserToken()
+}
+if(location.pathname === "/Vendor/Signup/Otp/Verify "  || location.pathname === '/Vendor/Login/Otp/Verify'){
+   UseVendorToken()
+}
   const navigate = useNavigate()
-  const location = useLocation()
+  
   const user = location
   const [OTP, setOTP] = useState("");
   const [state, setState] = useState(true)
@@ -39,7 +50,7 @@ function OtpVerify() {
               localStorage.setItem('vendorData', jsonString)
               localStorage.setItem('vendor', data.data.data.token)
               dispatch(token(data.data.data.token));
-              navigate("/vendor")
+              navigate("/vendor/dashboard")
             } else if (data.data.data.from === "user/login") {
               const jsonString =  JSON.stringify(data.data.data.userData);
               localStorage.setItem('userData', jsonString)

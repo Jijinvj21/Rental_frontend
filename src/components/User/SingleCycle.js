@@ -232,7 +232,7 @@ let errors=location.state?._id + 100
 
               {<Modal modal={<Accessories rentHandler={rentHandler} data={location.state} />} button={accessories()} />}
 
-              {<Modal modal={location.state?.terms} button={terms()} />}
+              {<Modal modal={<div className='w-full flex justify-center'>  <p className='break-words w-4/5 self-center'> {location.state?.terms} </p></div>} button={terms()} />}
             </div>
 
             <div className='z-0 md:w-1/2 pt-2'>

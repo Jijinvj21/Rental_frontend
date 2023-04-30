@@ -29,14 +29,14 @@ function Table(props) {
   return (
     <section className="container mx-auto p-6 font-mono">
        {props?.btn?.btn}
-      <div className='flex justify-between '>
+      {props.items?'':<div className='flex justify-between '>
         <div className=' w-full'>
  <Search/>
         </div>
         <div className='mb-1 pb-1 '>
  <Limit/>
         </div>
-      </div>
+      </div>}
       { props?.nodatamsg?props.nodatamsg: <div className=" overflow-auto   mb-8  rounded-lg shadow-lg ">
         <div className="w-full           ">
           <table className="w-full">
@@ -45,7 +45,7 @@ function Table(props) {
                 {
                   headings.map((item, index) => (
                     <>
-                    <th key={index} className="px-4 py-3"><span className='flex-col' >{item} <Sort props={item}/> </span>  </th>
+                    <th key={index} className="px-4 py-3"><span className='flex-col' >{item} {props.items?'':<Sort props={item}/>} </span>  </th>
                     </>
                   ))
                 }
@@ -57,7 +57,7 @@ function Table(props) {
           </table>
         </div>
       </div>}
-      <Pagination/>
+     {props.items?' ': <Pagination/>}
     </section>
   )
 }

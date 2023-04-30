@@ -1,14 +1,26 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from '../../instance/axios'
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {validationSchema} from '../../validation/validation';
+import UseUserToken from '../../customeHooks/useUserToken';
+import UseVendorToken from '../../customeHooks/useVendorToken';
 
 
 
 
 function UserSIgnup(props) {
+    const location =useLocation()
+console.log(typeof(location.pathname));
+    if(location.pathname === "/User/signUp"){
+      
+        UseUserToken()
+    }
+    if(location.pathname === "/Vendor/signup"){
+       UseVendorToken()
+    }
+
  
     const [user, setUser] = useState({
         name: null,
@@ -57,9 +69,15 @@ function UserSIgnup(props) {
                             />
                             <button className='bg-bgColor rounded-full  w-3/5 shadow-lg mt-12 text-center pt-3 pb-2  focus:outline-none'>GENERATE OTP</button>
 
-                            <Link to={`/${props.type}/login`}><h6 className='text-base text-center mt-10'>ALREDY HAVE AN ACCOUNT -> lOGIN</h6></Link>
+                            <Link to={`/${props.type}/login`}>
+                                <h6 className='text-base text-center mt-10'>ALREDY HAVE AN ACCOUNT </h6>
+                                <h6 className='text-base text-center mt-2 '>lOGIN </h6>
+                            </Link>
 
                         </div>
+                        <Link to='/'>
+                                <h1 className='text-lg text-center mt-5'> BACK TO HOME </h1>
+                              </Link>
                     </form>
                     <Outlet />
                 </div>

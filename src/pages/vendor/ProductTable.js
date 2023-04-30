@@ -392,7 +392,11 @@ if(urlPattern.test(image)){
    
 
     return (
-        <div className='w-full' ><User users={table} btn={btn} nodatamsg={ user? '':<div className='flex     justify-center items-center'><p className=' text-center '> NO DATA ARE AVAILABLE</p></div>} />
+        <div className='w-full' >
+            <h1 className='text-center pt-10 text-3xl'>PRODUCT LIST</h1>
+            <User users={table} btn={btn} nodatamsg={ user? '':
+        <div className='flex     justify-center items-center'>
+            <p className=' text-center '> NO DATA ARE AVAILABLE</p></div>} />
             
             <Filter props={"cycle"} />
 

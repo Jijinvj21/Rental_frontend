@@ -18,7 +18,7 @@ function SuccessMessage() {
           <p className="text-lg  mb-4 text-center md:text-left">we'll be in touch shortly!</p>
           <p className="text-lg ">
           <Link to="/">
-            <p className="text-bgColor hover:text-bgColor transition-colors text-xl text-center md:text-left">Back to Home</p>
+            <p className="text-white hover:text-bgColor transition-colors text-xl text-center md:text-left">Back to Home</p>
           </Link>
           </p>
         </div>

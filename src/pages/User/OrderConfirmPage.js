@@ -82,7 +82,7 @@ function Order() {
   return (
     <div className=' pt-14 ' >
       <Filter props={'booking'} />
-      <User users={table} />
+      <User users={table} items={true} />
 
     </div>
     // 

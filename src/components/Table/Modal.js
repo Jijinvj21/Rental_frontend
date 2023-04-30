@@ -17,7 +17,7 @@ function Modal(props) {
         className={props.button?"w-full":" m-5 pl-6  "}
       >
        <span className='flex text-lg    '>
-        {props.button?props.button:props?.addCycleBtn()}
+        {props.button?props.button:props?.addCycleBtn?props.button?props.button:props?.addCycleBtn():''}
         </span>
       </button>
       {isOpen && (

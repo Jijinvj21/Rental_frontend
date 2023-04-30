@@ -30,6 +30,7 @@ function  UserTable() {
   })
   return (
     <div className='overflow-auto h-screen' style={{  width: "100%" }}>
+       <h1 className='text-center text-2xl pt-10'>USER REVIEW</h1>
       <Filter props={'review'} />
       <User users={table}  nodatamsg={ user? '':<div className='flex  min-h-[600px]   justify-center items-center'><p className=' text-center '> NO DATA ARE AVAILABLE</p></div>} />
     </div>

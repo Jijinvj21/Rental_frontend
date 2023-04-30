@@ -27,7 +27,7 @@ function AdminSignup() {
             await axios.post('/admin/adminLogin', {
                 admin
             }).then((data) => {
-                navigate('/admin/user')
+                navigate('/admin/dashboard')
                 localStorage.setItem('admin', data.data.token)
                 dispatch(token(data.data.token));
                 

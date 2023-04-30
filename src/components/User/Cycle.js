@@ -69,7 +69,7 @@ function Cycle(props) {
                     
                     </div>
                     <div className='w-1/4 pt-3  flex justify-end'>
-                    <Limit />
+                    <Limit drop={true} />
                     </div>
                 </div>
                 <div className="flex justify-center items-center  drop-shadow-2xl   ">

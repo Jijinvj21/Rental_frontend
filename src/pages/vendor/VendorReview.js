@@ -6,7 +6,6 @@ import useAdminToken from '../../customeHooks/useAdminToken';
 
 function UserTable() {
   const [user, setUser] = useState([])
-  useAdminToken()
 
   const tableManagement = useSelector(state => state.dataManagement);
 
@@ -18,11 +17,11 @@ function UserTable() {
   let table = []
   console.log(user);
   user?.map((data, index) => {
-    let { name, stars, message, vendor } = data
-
+    let { name, stars, message, product } = data
+console.log(data);
     let table_head = {
       User_Name: name,
-      Product: vendor[0]?.name,
+      Product: product.name,
       Rating: stars,
       Message: message,
     }
@@ -31,6 +30,7 @@ function UserTable() {
   })
   return (
     <div className='overflow-auto h-screen' style={{ width: "100%" }}>
+      <h1 className='text-center pt-10 text-3xl'>USER REVIEW</h1>
       <Filter props={'review'} />
       <User users={table} nodatamsg={user ? '' : <div className='flex  min-h-[600px]   justify-center items-center'><p className=' text-center '> NO DATA ARE AVAILABLE</p></div>} />
     </div>

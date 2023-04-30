@@ -104,6 +104,7 @@ const formattedBookedToDate = date2.toLocaleDateString('en-US', { day: 'numeric'
  
   return (
     <div className='overflow-auto h-screen  w-screen ' >
+      <h1 className='text-center pt-10 text-3xl'>BOOKING LIST</h1>
       <Filter props={'booking'} />
       <User users={table} nodatamsg={ user? '':<div className='flex  min-h-[600px]   justify-center items-center'><p className=' text-center '> NO DATA ARE AVAILABLE</p></div>}/>
      

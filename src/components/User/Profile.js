@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import UseUserToken from '../../customeHooks/useUserToken'
 import { imageValidationSchema , profileNameSchema } from '../../validation/validation';
 import axios from '../../instance/axios';
@@ -11,7 +11,7 @@ function Profile() {
     const userData = localStorage.getItem('userData');
     const data = JSON.parse(userData);
     UseUserToken()
-   
+   console.log(data.name);
     const [user, setUser] = useState(data?.name)
     const [image, setImage] = useState(data?.image)
     const [preview,setPreview] =useState()
@@ -19,8 +19,20 @@ const userProfile ={
     name:user,
     image:image
 }
+let button =true
+useEffect(()=>{
+
+},[image,user])
+if(data?.image === image && data?.name === user ){
+button=true
+}else if(data?.image !== image || data?.name !== user){
+    button=false
+}
+
+
 const token = localStorage.getItem('user');
 const handleSubmit = async (e) => {
+
     e.preventDefault()
     try {
         const urlPattern = /^https?:\/\/\S+$/;
@@ -38,7 +50,6 @@ if(urlPattern.test(image)){
         toast.success(`${data.data.message}`);
         const jsonString =  JSON.stringify(data.data.userData[0]);
         localStorage.setItem('userData', jsonString)
-        //set data in to local storage
         setUplod(true)
     }).catch((error)=>{
         toast(`${error.response.data.message}`);
@@ -48,6 +59,8 @@ if(urlPattern.test(image)){
 
     }).catch((err) => { 
         toast(`${err}`);
+        setUplod(true)
+
     })
 
  
@@ -79,12 +92,16 @@ if(urlPattern.test(image)){
 
         }).catch((err) => { 
             toast(`${err}`);
+            setUplod(true)
+
         })
                
 
 
     }).catch((err) => { 
         toast(`${err}`);
+        setUplod(true)
+
     })
 }
        
@@ -105,15 +122,15 @@ if(urlPattern.test(image)){
                     >
                             Upload image
 
-                        <input className='hidden' type="file" onChange={(e) => {setImage(e.target.files[0]);setPreview(URL.createObjectURL(e.target.files[0]));}} />
+                        <input className='hidden' type="file"   onChange={(e) => {setImage(e.target.files[0]);setPreview(URL.createObjectURL(e.target.files[0])); }} />
                     </div>
                         </label>
                 </div>
                 <div className='flex md:flex-row flex-col justify-center mt-5 mb-1 md:mb-3   '>
-                    <input type="text" className='outline-none rounded-full text-center text-sm md:text-lg bg-bgColor p-2 w-full md:w-44 mb-2 md:m-1 ' value={user} onChange={(e) => { setUser(e.target.value); }} />
+                    <input type="text"  className='outline-none rounded-full text-center text-sm md:text-lg bg-bgColor p-2 w-full md:w-44 mb-2 md:m-1 ' value={user} onChange={(e) => { setUser(e.target.value); }} />
                     <input type="text" readOnly className='outline-none rounded-full text-center cursor-default text-sm md:text-lg bg-bgColor p-2 mb-2 md:m-1   md:w-44' value={"4789633214"} />
                 </div>
-                {upload ?
+                {  button? <p  className="text-white       rounded-full  shadow-lg   mx-2    bg-bgColor hover:bg-bgColor focus:ring-4 focus:ring-blue-300 font-medium  text-sm px-5 py-2 text-center mr-2 dark:bg-bgColor  dark:focus:ring-bgColor inline-flex items-center">SUBMIT</p>  :    upload ?
                             <button className="text-white      rounded-full  shadow-lg   mx-2    bg-bgColor hover:bg-bgColor focus:ring-4 focus:ring-blue-300 font-medium  text-sm px-5 py-2 text-center mr-2 dark:bg-bgColor dark:hover:bg-[#30444a] dark:focus:ring-bgColor inline-flex items-center">SUBMIT</button> :
                             <button disabled type="button" className="text-white      rounded-full  shadow-lg         bg-bgColor hover:bg-bgColor focus:ring-4 focus:ring-blue-300 font-medium  text-sm px-5 py-2.5 text-center mr-2 dark:bg-bgColor  dark:focus:ring-bgColor inline-flex items-center">
                                 <svg aria-hidden="true" role="status" className="inline w-4 h-4 mr-3 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -130,3 +147,137 @@ if(urlPattern.test(image)){
 }
 
 export default Profile
+
+
+
+
+
+
+
+
+// import React, { useEffect, useState } from 'react';
+// import UseUserToken from '../../customeHooks/useUserToken';
+// import { imageValidationSchema, profileNameSchema } from '../../validation/validation';
+// import axios from '../../instance/axios';
+// import { toast } from 'react-toastify';
+
+// function Profile() {
+//   const [upload, setUpload] = useState(true);
+//   const userData = localStorage.getItem('userData');
+//   const data = JSON.parse(userData);
+//   const token = UseUserToken();
+  
+//   const [user, setUser] = useState(data?.name || '');
+//   const [image, setImage] = useState(data?.image);
+//   const [preview, setPreview] = useState('');
+  
+//   useEffect(() => {
+//     setUser(data?.name || '');
+//   }, [data]);
+  
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     try {
+//       const urlPattern = /^https?:\/\/\S+$/;
+//       if (urlPattern.test(image)) {
+//         setUpload(false);
+//         profileNameSchema.validate({ name: user })
+//           .then(async () => {
+//             const userProfile = {
+//               name: user,
+//               image: image,
+//             };
+//             await axios.post('/profileUpdate', userProfile, {
+//               headers: {
+//                 'Authorization': `Bearer ${token}`,
+//                 'Content-Type': 'multipart/form-data',
+//               },
+//             }).then((data) => {
+//               toast.success(`${data.data.message}`);
+//               const jsonString = JSON.stringify(data.data.userData[0]);
+//               localStorage.setItem('userData', jsonString);
+//               //set data in to local storage
+//               setUpload(true);
+//             }).catch((error) => {
+//               toast(`${error.response.data.message}`);
+//               setUpload(true);
+//             });
+//           }).catch((err) => {
+//             toast(`${err}`);
+//           });
+//       } else {
+//         imageValidationSchema.validate({ image: image })
+//           .then(async () => {
+//             profileNameSchema.validate({ name: user })
+//               .then(async () => {
+//                 const userProfile = {
+//                   name: user,
+//                   image: image,
+//                 };
+//                 setUpload(false);
+//                 await axios.post('/profileUpdate', userProfile, {
+//                   headers: {
+//                     'Authorization': `Bearer ${token}`,
+//                     'Content-Type': 'multipart/form-data',
+//                   },
+//                 }).then((data) => {
+//                   toast.success(`${data.data.message}`);
+//                   const jsonString = JSON.stringify(data.data.userData[0]);
+//                   localStorage.setItem('userData', jsonString
+//                ) }).catch((error) => {
+//                     toast(`${error.response.data.message}`);
+//                     setUpload(true);
+//                     });
+//                     }).catch((err) => {
+//                     toast(`${err}`);
+//                     });
+//                     }).catch((err) => {
+//                     toast(`${err}`);
+//                     });
+//                     }
+//                     } catch (error) {
+//                     toast(`${error}`);
+//                     setUpload(true);
+//                     }
+//                     };
+                    
+//                     const handleImageChange = (e) => {
+//                     const file = e.target.files[0];
+
+//                     if (!file) return;
+// setImage(file);
+// const reader = new FileReader();
+// reader.readAsDataURL(file);
+// reader.onload = () => {
+// setPreview(reader.result);
+// };
+// };
+
+// return (
+// <>
+// <h1>Profile</h1>
+// <form onSubmit={handleSubmit}>
+// <div>
+// <label>Name</label>
+// <input type="text" value={user} onChange={(e) => setUser(e.target.value)} />
+// </div>
+// <div>
+// <label>Profile Image</label>
+// <input type="file" accept="image/*" onChange={handleImageChange} />
+// </div>
+// {preview && (
+// <img src={preview} alt="Preview" style={{ width: '100%', maxWidth: '300px' }} />
+// )}
+// <button type="submit" disabled={!upload}>Update</button>
+// </form>
+// </>
+// );
+// }
+
+// export default Profile;
+
+
+
+
+
+

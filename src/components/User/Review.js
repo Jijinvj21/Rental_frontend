@@ -76,9 +76,9 @@ function Review() {
 
 
     return (
-        <div className='container mx-auto p-6 font-mono   '>
+        <div className='container mx-auto p-6 font-mono  pt-20 rounded-lg '>
             <div className="w-full mb-8  rounded-lg shadow-lg     ">
-                <div className="w-full   overflow-auto        ">
+                <div className="w-full   overflow-auto    rounded-xl    ">
 
                     <table className="w-full">
                         <thead>
