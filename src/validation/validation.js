@@ -14,7 +14,7 @@ export const validationSchema = Yup.object().shape({
       }
     )
     .min(2, 'Name must be at least 2 characters')
-    .max(10, 'Name must be at most 50 characters')
+    .max(10, 'Name must be at most 10 characters')
     .matches(/^[a-zA-Z\s]+$/, 'Name can only contain letters and spaces'),
 
 mobile: Yup.string()
@@ -42,7 +42,7 @@ export const profileNameSchema = Yup.object().shape({
       }
     )
     .min(2, 'Name must be at least 2 characters')
-    .max(10, 'Name must be at most 50 characters')
+    .max(10, 'Name must be at most 10 characters')
     .matches(/^[a-zA-Z\s]+$/, 'Name can only contain letters and spaces'),
 });
 
@@ -76,7 +76,7 @@ export const addCycleValidationSchema = Yup.object().shape({
     }
   )
   .min(2, 'Type must be at least 2 characters')
-  .max(10, 'Name must be at most 50 characters')
+  .max(10, 'Type must be at most 10 characters')
   .matches(/^[a-zA-Z\s]+$/, 'Type can only contain letters and spaces'),
 
   names: Yup.string()
@@ -92,7 +92,7 @@ export const addCycleValidationSchema = Yup.object().shape({
     }
   )
   .min(2, 'Name must be at least 2 characters')
-  .max(10, 'Name must be at most 50 characters')
+  .max(10, 'Name must be at most 10 characters')
   .matches(/^[a-zA-Z\s]+$/, 'Name can only contain letters and spaces'),
 
   breake: Yup.string()
@@ -108,7 +108,7 @@ export const addCycleValidationSchema = Yup.object().shape({
       }
     )
     .min(2, 'Break must be at least 2 characters')
-    .max(10, 'Name must be at most 50 characters')
+    .max(10, 'Break must be at most 10 characters')
     .matches(/^[a-zA-Z\s]+$/, 'Break can only contain letters and spaces'),
 
     tyresize: Yup.string()
@@ -134,7 +134,7 @@ export const addCycleValidationSchema = Yup.object().shape({
       }
     )
     .min(2, 'Price include items must be at least 2 characters')
-    .max(10, 'Name must be at most 50 characters')
+    .max(10, 'Price include items must be at most 10 characters')
     .matches(/^[a-zA-Z\s]+$/, 'Price include items can only contain letters and spaces'),
 
   securitydeposit: Yup.string()
@@ -194,7 +194,7 @@ export const accessoriesValidationSchema = Yup.object().shape({
     }
   )
   .min(2, 'Name must be at least 2 characters')
-  .max(10, 'Name must be at most 50 characters')
+  .max(10, 'Name must be at most 10 characters')
   .matches(/^[a-zA-Z\s]+$/, 'Name can only contain letters and spaces'),
 
     size: Yup.string()

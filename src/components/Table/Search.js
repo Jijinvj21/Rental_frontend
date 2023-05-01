@@ -87,7 +87,8 @@ function Search(props) {
           value={searchVal}
           placeholder={props.placeholder ? `${props.placeholder}` : 'search'}
           type="text"
-          className={props.color ? `bg-${props.color} w-full text-sm md:text-xl opacity-70 rounded-full mt-2.5 md:mt-5 pt-1.5 md:p-3 pl-3 md:pl-9 focus:outline-none` : 'bg-boxColor w-full text-sm md:text-xl opacity-70 rounded-full mt-2.5 md:mt-5 pt-1.5 md:p-3 pl-3 md:pl-9 focus:outline-none'}
+          
+          className={props.color ? `bg-${props.color} w-full text-sm md:text-xl opacity-70 rounded-full mt-2.5 md:mt-5 pt-1.5 md:p-3 pl-3 md:pl-9 focus:outline-none ` : '  bg-boxColor w-full text-sm md:text-xl opacity-70 rounded-full mt-2.5 md:mt-5 pt-1.5 md:p-3 pl-3 md:pl-9 focus:outline-none'}
         />
       </div>
     </div>

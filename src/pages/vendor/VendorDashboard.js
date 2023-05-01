@@ -6,7 +6,13 @@ import axios from '../../instance/axios'
 function AdminDashboard() {
   const [data,setData]=useState()
 useEffect(()=>{
-  axios.get('/admin/adminDashnoard', {
+  axios.get('/vendor/vendorDashboard', {
+    
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('vendor'),
+        'Content-Type': 'application/json'
+      }
+    
   }).then((data) => {
       console.log(data.data);
       setData(data) 

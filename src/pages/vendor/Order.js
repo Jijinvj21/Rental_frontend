@@ -62,9 +62,10 @@ function  Order() {
 
 
   let table = []
+  console.log(user);
   user?.map((data, index) => {
 
-    let { cycle,user, accessories,amount, bookedFromDate,bookedToDate, status } = data
+    let { product,userDetails, accessories,amount, bookedFromDate,bookedToDate, status } = data
     const date = new Date(bookedFromDate);
 const formattedBookedFromDate = date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
 
@@ -75,9 +76,9 @@ const formattedBookedToDate = date2.toLocaleDateString('en-US', { day: 'numeric'
 
 
     let table_head = {
-      Cycle_Image:<div className='flex justify-center'><img src={cycle?.image} alt="BigCo Inc. logo" className='w-14   ' /></div>,
-    Cycle_Name:cycle?.name,
-    User_Name:user?.name,
+      Cycle_Image:<div className='flex justify-center'><img src={product?.image} alt="BigCo Inc. logo" className='w-14   ' /></div>,
+    Cycle_Name:product?.name,
+    User_Name:userDetails?.name,
     Amount:amount,
     From_Date:formattedBookedFromDate,
     To_Date:formattedBookedToDate,
@@ -106,7 +107,7 @@ const formattedBookedToDate = date2.toLocaleDateString('en-US', { day: 'numeric'
     <div className='overflow-auto h-screen  w-screen ' >
       <h1 className='text-center pt-10 text-3xl'>BOOKING LIST</h1>
       <Filter props={'booking'} />
-      <User users={table} nodatamsg={ user? '':<div className='flex  min-h-[600px]   justify-center items-center'><p className=' text-center '> NO DATA ARE AVAILABLE</p></div>}/>
+      <User users={table}  nodatamsg={table.length !== 0  ? '' : <div className='flex  min-h-[600px]   justify-center items-center'><p className=' text-center '> NO DATA ARE AVAILABLE</p></div>}/>
      
     </div>
     // 

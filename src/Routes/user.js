@@ -18,6 +18,7 @@ import ReviewPage from '../pages/User/ReviewPage'
 import PaymentSucessPage from '../pages/User/PaymentSucessPage'
 import PaymentCancle from '../pages/User/PaymentCanclePage'
 import PaymentErrors from '../pages/User/PaymentError'
+import Error from '../components/Error/Error'
 
 
 
@@ -42,17 +43,11 @@ function user() {
                         <Route path='/rentalpatner' element={<RentalPatnerPage />} />
                         <Route path='/user_order' element={<OrderConfirmPage />} />
                         <Route path='/review' element={<ReviewPage />} />
-                        <Route path='/sucess' element={<PaymentSucessPage/>} />
+                        <Route path='/sucess/:sucess' element={<PaymentSucessPage/>} />
                         <Route path='/cancel/:cancle' element={<PaymentCancle/>} />
-                        <Route path='/error/errors' element={<PaymentErrors/>} />
-                        
-
-
-                        
-
-
+                        <Route path='/error/:errors' element={<PaymentErrors/>} />
                     </Route>
-
+                    <Route path={"*"} element={<Error/>} />
 
                     
                 </Route>

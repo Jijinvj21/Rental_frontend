@@ -4,8 +4,7 @@ import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {validationSchema} from '../../validation/validation';
-import UseUserToken from '../../customeHooks/useUserToken';
-import UseVendorToken from '../../customeHooks/useVendorToken';
+
 
 
 
@@ -13,13 +12,7 @@ import UseVendorToken from '../../customeHooks/useVendorToken';
 function UserSIgnup(props) {
     const location =useLocation()
 console.log(typeof(location.pathname));
-    if(location.pathname === "/User/signUp"){
-      
-        UseUserToken()
-    }
-    if(location.pathname === "/Vendor/signup"){
-       UseVendorToken()
-    }
+  
 
  
     const [user, setUser] = useState({
@@ -28,6 +21,19 @@ console.log(typeof(location.pathname));
     })
     const type = props.type
     const navigate = useNavigate()
+    useEffect(()=>{
+ 
+        if(localStorage.getItem('user')){
+          if(location.pathname === '/User/signUp'  ){
+           navigate('/');
+          }
+        }
+        if(localStorage.getItem('vendor')){
+            if( location.pathname === '/Vendor/signup' ){
+             navigate('/rentalpatner');
+            }
+          }
+       },[])
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {

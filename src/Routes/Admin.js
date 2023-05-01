@@ -26,8 +26,8 @@ function Admin() {
                         <Route path='/chat' element={<Chat/>}/>
                         <Route path='/dashboard' element={<AdminDashboard/>}/>
                         <Route path='/review' element={<AdminReview/>}/>
-                        
                     </Route>
+                    <Route path={"*"} element={'kfif'} />
 
             </Routes>
         </>

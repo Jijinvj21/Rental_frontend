@@ -32,7 +32,7 @@ const PieChart = (props) => {
     };
   },[props.data?.data]);
 
-  return <canvas ref={chartRef} className=" md:w-[550px] md:h-[550px] text-center" />;
+  return <canvas ref={chartRef} className=" md:w-[550px] md:h-[530px] text-center" />;
 };
 
 export default PieChart;

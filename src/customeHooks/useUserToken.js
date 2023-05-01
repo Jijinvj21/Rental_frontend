@@ -28,7 +28,7 @@ function UseUserToken() {
 
             
                 setVendorToken(utoken);
-if(location.pathname === "/User/login" || location.pathname === "/User/signUp" || location.pathname === '/User/Login/Otp/Verify' || location.pathname ===  '/User/Signup/Otp/Verify'){
+if(location.pathname === "/User/login" ){
     navigate('/');
 }
 

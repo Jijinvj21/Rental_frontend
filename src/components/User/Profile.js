@@ -11,7 +11,6 @@ function Profile() {
     const userData = localStorage.getItem('userData');
     const data = JSON.parse(userData);
     UseUserToken()
-   console.log(data.name);
     const [user, setUser] = useState(data?.name)
     const [image, setImage] = useState(data?.image)
     const [preview,setPreview] =useState()

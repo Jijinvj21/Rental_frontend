@@ -21,6 +21,7 @@ function Accessories(props) {
       }
     },).then((data) => {
       setAccessories(data?.data?.accessories)
+      
     })
   }, [])
   const handleChange = (data) => {
@@ -35,7 +36,9 @@ function Accessories(props) {
   useEffect(()=>{
     if(selectedItems) props?.rentHandler?.(selectedItems);
   },[selectedItems])
+  console.log(accessories.length);
   return (
+    accessories.length === 0 ? <div className=' w-full'><h1 className='text-center'>ON ACCESSORIES</h1></div> :
     < div className='flex flex-col  gap-4 py-5'>
       <div className='grid grid-cols-2 '>
         {accessories.map((data) => {

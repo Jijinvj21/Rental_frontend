@@ -30,8 +30,8 @@ function Ventor() {
 <Route path='/order' element={<Order/>}/>
 <Route path='/review' element={<VendorReview/>}/>
 <Route path='/dashboard' element={<VendorDashboard/>}/>
-
 </Route>
+<Route path={"*"} element={'kfif'} />
         </Route>
     </Routes>
     </>

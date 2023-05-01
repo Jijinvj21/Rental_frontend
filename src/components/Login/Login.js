@@ -5,10 +5,8 @@ import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './otp.css'
 import {loginvalidationSchema} from '../../validation/validation';
-import UseUserToken from '../../customeHooks/useUserToken';
 
 import { useLocation } from "react-router-dom";
-import UseVendorToken from '../../customeHooks/useVendorToken';
 
 
 
@@ -16,17 +14,24 @@ import UseVendorToken from '../../customeHooks/useVendorToken';
 function Login(props) {
 const location =useLocation()
 console.log(location.pathname);
-    if(location.pathname === "/User/login"  ||  location.pathname === "/User/signUp"){
-        alert(454)
-        UseUserToken()
-    }
-    if(location.pathname === "/vendor/login"){
-       UseVendorToken()
-    }
+   
 
   const type=  props.type
     const navigate = useNavigate()
     const [mobile, setMobile] = useState('')
+    useEffect(()=>{
+ 
+        if(localStorage.getItem('user')){
+          if(location.pathname === '/user/login'  ){
+           navigate('/');
+          }
+        }
+        if(localStorage.getItem('vendor')){
+            if( location.pathname === '/vendor/login' ){
+             navigate('/rentalpatner');
+            }
+          }
+       },[])
     const handleLogin = async (e) => {
         e.preventDefault()
         try {

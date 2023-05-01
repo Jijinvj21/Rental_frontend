@@ -2,47 +2,77 @@ import React, { useEffect, useRef, useState } from 'react'
 import Modal from '../Table/Modal'
 import axios from '../../instance/axios'
 import Messages from '../chat/Messages'
+import { io } from "socket.io-client"
 
 
 function Userchat() {
-    const [message , setMessage]=useState()
-    const [conversationId , setConversationId]=useState()
-    const [newMessage , setNewMessage] =useState()
-    
+    const [message, setMessage] = useState()
+    const [conversationId, setConversationId] = useState()
+    const [newMessage, setNewMessage] = useState()
     const scrollRef = useRef(null);
+    const socket = useRef()
+    const [arrivalMsg, setArrivelMsg] = useState(null)
+    const userData = localStorage.getItem('userData');
+    const data = JSON.parse(userData);
+
+    console.log(data?._id);
+    useEffect(() => {
+        socket.current = io('ws://localhost:9000')
+        socket.current.on('getMessage', data => {
+            console.log(data);
+            setArrivelMsg({
+                sender: data.senderId,
+                text: data.text,
+                createdAt: Date.now()
+            })
+        })
+    }, [])
+    useEffect(() => {
+        arrivalMsg && '63a1e1dd25d76e188ff8c157' && setMessage((prev) => [...prev, arrivalMsg])
+    }, [arrivalMsg, conversationId])
+    useEffect(() => {
+        socket.current.emit('addUser', data?._id)
+        socket.current.on('getUsers', users => {
+            console.log(users);
+        })
+    }, [])
+
+
+
+
     useEffect(() => {
         if (scrollRef.current) {
-          scrollRef.current.scrollIntoView({ behavior: "smooth" });
+            scrollRef.current.scrollIntoView({ behavior: "smooth" });
         }
-      }, [message]);
+    }, [message]);
 
 
 
 
-    const handleChat =()=>{
+    const handleChat = () => {
         axios.post('/chat/newConversation', {
-            userId:"64351fdd9d09d60ac3d4c6c5",
-            adminId:"63a1e1dd25d76e188ff8c157",
+            userId: data?._id,
+            adminId: "63a1e1dd25d76e188ff8c157",
         })
             .then((response) => {
-                setConversationId(()=>response.data.conversationId)
+                setConversationId(() => response.data.conversationId)
                 console.log(response.data.conversationId);
 
-                if( response.data.conversationId ){
+                if (response.data.conversationId) {
 
-                        axios.post('/chat/getMessage', {
-                            conversationId:response.data.conversationId ,
-                            userId:"64351fdd9d09d60ac3d4c6c5",
+                    axios.post('/chat/getMessage', {
+                        conversationId: response.data.conversationId,
+                        userId: data?._id,
+                    })
+                        .then((response) => {
+                            console.log(response.data);
+                            setMessage(response.data)
+
                         })
-                            .then((response) => {
-                                console.log(response.data);
-                                setMessage(response.data)
-                    
-                            })
-                            .catch((error) => {
-                                console.error(error);
-                            });
-                   
+                        .catch((error) => {
+                            console.error(error);
+                        });
+
                 }
             })
             .catch((error) => {
@@ -51,25 +81,36 @@ function Userchat() {
 
     }
 
-    
+
 
     const handleSubmit = (e) => {
         e.preventDefault()
+
+
+        //socket
+        socket.current.emit('sendMessage', {
+            senderId: data?._id,
+            receiverId: '63a1e1dd25d76e188ff8c157',
+            text: newMessage
+        })
+
+
+
         axios.post('/chat/addMessage', {
             conversationId: conversationId,
-            sender:'64351fdd9d09d60ac3d4c6c5' ,
+            sender: data?._id,
             text: newMessage
         })
             .then((response) => {
                 console.log(response);
                 axios.post('/chat/getMessage', {
-                    conversationId:conversationId ,
-                    userId:"64351fdd9d09d60ac3d4c6c5",
+                    conversationId: conversationId,
+                    userId: data?._id,
                 })
                     .then((response) => {
                         console.log(response.data);
                         setMessage(response.data)
-            
+
                     })
                     .catch((error) => {
                         console.error(error);
@@ -79,7 +120,7 @@ function Userchat() {
                 console.error(error);
             });
     }
-    
+
     const chatButton = () => {
 
         return (
@@ -90,29 +131,29 @@ function Userchat() {
         )
     }
 
-    const messages = () =>{
-return(
-    <div>
-        <div  className='overflow-auto h-[500px]  lg:h-[730px] m-5  scrollbar scrollbar-thumb-bgColor scrollbar-thumb-rounded-full scrollbar-w-3 '>
-        {
-                                message ? message.map((data) => {
-                                    console.log(data.sender);
-                                    return (
-                                        <div ref={scrollRef}>
+    const messages = () => {
+        return (
+            <div>
+                <div className='overflow-auto h-[500px]  lg:h-[730px] m-5  scrollbar scrollbar-thumb-bgColor scrollbar-thumb-rounded-full scrollbar-w-3 '>
+                    {
+                        message ? message.map((data) => {
+                            console.log(data.sender);
+                            return (
+                                <div ref={scrollRef}>
 
-                                        <Messages Messages={data}  own={!data.admin} />
-                                        </div>
-                                    )
-                                }) : ''
-                            }
-        </div>
-   
-                                         <div className='flex justify-center'>
-                            <textarea onChange={(e) => setNewMessage(e.target.value)} className="h-14 w-1/2  resize-none outline-none text-xs md:text-sm    bg-bgColor rounded-xl p-2 scrollbar scrollbar-thumb-boxColor scrollbar-thumb-rounded-full scrollbar-w-3 " placeholder='Write something...' type='text' />
-                            <button onClick={handleSubmit} className='bg-bgColor rounded-xl my-2 px-2 mx-1  md:pt-1 md:m-2 md:px-3    text-xs md:text-sm '  >SUBMIT</button>
-                        </div>
-    </div>
-)
+                                    <Messages Messages={data} own={!data.admin} />
+                                </div>
+                            )
+                        }) : ''
+                    }
+                </div>
+
+                <div className='flex justify-center'>
+                    <textarea onChange={(e) => setNewMessage(e.target.value)} className="h-14 w-1/2  resize-none outline-none text-xs md:text-sm    bg-bgColor rounded-xl p-2 scrollbar scrollbar-thumb-boxColor scrollbar-thumb-rounded-full scrollbar-w-3 " placeholder='Write something...' type='text' />
+                    <button onClick={handleSubmit} className='bg-bgColor rounded-xl my-2 px-2 mx-1  md:pt-1 md:m-2 md:px-3    text-xs md:text-sm '  >SUBMIT</button>
+                </div>
+            </div>
+        )
     }
 
     return (

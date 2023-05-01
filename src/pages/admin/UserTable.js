@@ -62,7 +62,7 @@ console.log(data);
     <div className='overflow-auto h-screen' style={{  width: "100%" }}>
       <div className='text-2xl text-center pt-10 '>USERE LIST</div>
       <Filter props={'user'} />
-      <User users={table}  nodatamsg={ user? '':<div className='flex  min-h-[600px]   justify-center items-center'><p className=' text-center '> NO DATA ARE AVAILABLE</p></div>} />
+      <User users={table}   nodatamsg={table.length !== 0  ? '' : <div className='flex  min-h-[600px]   justify-center items-center'><p className=' text-center '> NO DATA ARE AVAILABLE</p></div>} />
       <ToastContainer {...toastConfig} />
     </div>
     // 

@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import axios from '../../instance/axios'
 
+import { io} from 'socket.io-client'
+
+
 
 import Conversation from './Conversation'
 import Search from '../Table/Search'
@@ -11,32 +14,91 @@ import Modal from '../Table/Modal'
 import Messages from './Messages'
 
 function Chat() {
+    const admin  =localStorage.getItem('admin') 
+
     const [conversationId ,setConversationId]=useState()
     const [users, setUsers] = useState([])
+    // const [socket, setSocket] = useState(null)
     const [close, setClose] = useState()
     const [currentChat, setCurrentChat] = useState({
-        userChat: null,
+        // userChat: null,
         userId: null,
     })
     const [newMessage, setNewMessage] = useState()
     const scrollRef = useRef(null);
+    const socket = useRef()
+const [arrivalMsg,setArrivelMsg]=useState(null)
+const [msg,setMsg]=useState([])
+
+useEffect(()=>{
+socket.current=io('ws://localhost:9000')
+socket.current.on('getMessage',data=>{
+    console.log(data);
+    setArrivelMsg({
+        sender:data.senderId,
+        text:data.text,
+        createdAt:Date.now()
+    })
+})
+},[])
+useEffect(()=>{
+    arrivalMsg && '63a1e1dd25d76e188ff8c157' && setMsg((prev)=>[...prev,arrivalMsg])
+},[arrivalMsg,conversationId])
+
+// useEffect(()=>{
+//     socket?.on('wel',Messages=>{
+//         console.log(Messages);
+//     })
+// },[socket])
+console.log(socket)
+
+useEffect(()=>{
+socket.current.emit('addUser','63a1e1dd25d76e188ff8c157')
+socket.current.on('getUsers',users=>{
+    console.log(users);
+})
+},[])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     useEffect(() => {
         if (scrollRef.current) {
           scrollRef.current.scrollIntoView({ behavior: "smooth" });
         }
-      }, [currentChat]);
+      }, [msg]);
 
-    users.map((data) => {
-        return (
-            <>
-                <Conversation close={modalClose} userList={data[0]} />
-            </>
-        );
-    });
+    // users.map((data) => {
+    //     console.log(data);
+    //     return (
+    //         <>
+    //             <Conversation close={modalClose} userList={data} />
+    //         </>
+    //     );
+    // });
 
     const handleUsers = (() => {
-        axios.post('/chat/getusers', { adminId: '63a1e1dd25d76e188ff8c157' })
+        axios.post('/chat/getusers', {admin })
             .then((response) => {
+                console.log(response);
                 setUsers(() => response.data)
             })
             .catch((error) => {
@@ -47,10 +109,10 @@ function Chat() {
 
     function modalClose(id, closeModal) {
         setClose(() => closeModal)
-
+console.log(id);
         axios.post('chat/newConversation', {
             userId:id ? id : currentChat.userId,
-            adminId:"63a1e1dd25d76e188ff8c157",
+            // adminId:"63a1e1dd25d76e188ff8c157",
             
         })
             .then((response) => {
@@ -59,10 +121,12 @@ function Chat() {
                 axios.post('chat/getMessage', {
                     conversationId: response.data.conversationId,
                     userId: id ? id : currentChat.userId,
-                    admin:'63a1e1dd25d76e188ff8c157'
+                    // admin:'63a1e1dd25d76e188ff8c157'
                 })
                     .then((response) => {
-                        setCurrentChat({ ...currentChat, userChat: response.data, userId: id ? id : currentChat.userId })
+                        setCurrentChat({ ...currentChat, userId: id ? id : currentChat.userId })
+                        setMsg(response.data)
+                        
                     })
                     .catch((error) => {
                         console.error(error);
@@ -98,7 +162,7 @@ function Chat() {
                         {users?.map((data) => {
                             return (
                                 <>
-                                    <Conversation close={modalClose} userList={data[0]} />
+                                    <Conversation close={modalClose} userList={data} />
                                 </>
                             )
                         })
@@ -114,6 +178,23 @@ function Chat() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+//socket
+socket.current.emit('sendMessage',{
+    senderId:'63a1e1dd25d76e188ff8c157',
+    receiverId:'64351fdd9d09d60ac3d4c6c5',
+    text:newMessage
+})
+
+
+
+
+
+
+
+
+
+
+
         axios.post('/chat/addMessage', {
             conversationId: conversationId,
             sender: currentChat.userId,
@@ -121,6 +202,7 @@ function Chat() {
             text: newMessage
         })
             .then((response) => {
+                console.log(response);
                 setUsers(() => [response.data])
                 modalClose()
             })
@@ -131,18 +213,21 @@ function Chat() {
 
 
 
+
+
     return (
         <div className='flex justify-center items-center mx-auto'>
 
-            <div className={currentChat.userChat ? 'w-full bg-boxColor m-5 rounded-3xl overflow-auto h-[800px]  lg:h-[830px]' : 'w-full bg-boxColor m-5 rounded-3xl overflow-auto h-[200px]  lg:h-[230px]'}>
+            <div className={msg ? 'w-full bg-boxColor m-5 rounded-3xl overflow-auto h-[800px]  lg:h-[830px]' : 'w-full bg-boxColor m-5 rounded-3xl overflow-auto h-[200px]  lg:h-[230px]'}>
                 <div className='m-5'>
                     <Modal close={close} modal={user()} button={userList()} />
                 </div>
-                {currentChat.userChat ?
+                {msg ?
                     <>
                         <div className='overflow-auto h-[600px]  lg:h-[620px]  m-5  scrollbar scrollbar-thumb-bgColor scrollbar-thumb-rounded-full scrollbar-w-3 '>
                             {
-                                currentChat ? currentChat?.userChat?.map((data) => {
+                                msg ? msg?.map((data) => {
+                                    // msg.map((data)=>{
                                     console.log(data);
                                     return (
                                         <div ref={scrollRef}>
@@ -151,6 +236,7 @@ function Chat() {
                                         </div>
                                     )
                                 }) : ''
+                                    // })
                             }
                         </div>
                         <div className='flex justify-center'>

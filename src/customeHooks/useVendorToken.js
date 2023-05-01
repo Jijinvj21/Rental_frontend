@@ -25,7 +25,7 @@ function UseVendorToken() {
             dispatch(tokenVerified(data.status))
             dispatch(token(vtoken))
             
-            if(location.pathname === "/vendor/login" || location.pathname === "/Vendor/signup" || location.pathname === '/Vendor/Login/Otp/Verify'  || location.pathname === "/Vendor/Signup/Otp/Verify"){
+            if(location.pathname === "/vendor/login"){
                 navigate('/Vendor/dashboard');
             }
             

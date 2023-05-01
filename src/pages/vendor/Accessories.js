@@ -341,8 +341,7 @@ else{
     return (
         <div className='overflow-auto h-screen' style={{ width: "100%" }}>
             <h1 className='text-center pt-10 text-3xl'>ACCESSORIES LIST</h1>
-            <User users={table} btn={btn} nodatamsg={ user? '':
-            <div className='flex  min-h-[600px]   justify-center items-center'><p className=' text-center '> NO DATA ARE AVAILABLE</p></div>}/>
+            <User users={table}  btn={btn} nodatamsg={table.length !== 0  ? '' : <div className='flex  min-h-[600px]   justify-center items-center'><p className=' text-center '> NO DATA ARE AVAILABLE</p></div>}/>
            
             <Filter props={"accessories"}  />
 

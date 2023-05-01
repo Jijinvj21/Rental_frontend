@@ -90,8 +90,7 @@ function UserTable() {
   return (
     <div className='overflow-auto h-screen' style={{  width: "100%" }}>
       <h1 className='text-center text-2xl pt-10'>VENDOR LIST</h1>
-      <User users={table} nodatamsg={ user? '':
-    <div className='flex  min-h-[600px]   justify-center items-center'><p className=' text-center '> NO DATA ARE AVAILABLE</p></div>} />
+      <User users={table}  nodatamsg={table.length !== 0  ? '' : <div className='flex  min-h-[600px]   justify-center items-center'><p className=' text-center '> NO DATA ARE AVAILABLE</p></div>} />
       <ToastContainer {...toastConfig} />
       <Filter props={'vendor'} />
 

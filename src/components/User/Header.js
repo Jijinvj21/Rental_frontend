@@ -73,7 +73,7 @@ function Header() {
                                         {vendordata.name.split(' ')[0]}</span>
                                     <div className={`${!vendordropdown && 'hidden'} absolute top-9 bg-bgColor p-5 shadow-md  rounded`}>
                                         <ul className='flex flex-col gap-2 text-sm'>
-                                            <NavLink to='/vendor/product_table'>
+                                            <NavLink to='/vendor/dashboard'>
                                                 <li>DASHBOARD</li>
                                             </NavLink>
                                         </ul>

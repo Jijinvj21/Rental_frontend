@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom';
 
 
 function Filter(props) {
+  console.log(props?.limit);
   const location = useLocation();
   const from = location.pathname
   const fromValue = useSelector((state) => state.userDataSlice.from);
@@ -30,7 +31,7 @@ function Filter(props) {
         const userDate = localStorage.getItem('userDate')
         const date = JSON.parse(userDate);
         const url = await axios.post(
-          `/filter/filter?page=${tableManagement.page ? tableManagement.page : ""}&sort=${tableManagement.sort ? tableManagement.sort : ""}&order=${tableManagement.order ? tableManagement.order : ''}&search=${tableManagement.search}&limit=${tableManagement.limit ? tableManagement.limit : ''}&tokenOf=${partinlowercase}&state=${props?.state?props?.state:''}&fromDate=${date.from}&toDate=${date.to}`,
+          `/filter/filter?page=${tableManagement.page ? tableManagement.page : ""}&sort=${props?.limit?props?.limit : tableManagement.sort ? tableManagement.sort : ""}&order=${tableManagement.order ? tableManagement.order : ''}&search=${tableManagement.search}&limit=${tableManagement.limit ? tableManagement.limit : ''}&tokenOf=${partinlowercase}&state=${props?.state?props?.state:''}&fromDate=${date.from}&toDate=${date.to}`,
           { data: props?.props},
           {
             headers: {

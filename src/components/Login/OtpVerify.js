@@ -1,5 +1,5 @@
 import axios from '../../instance/axios'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import OTPInput from "react-otp-input";
 import { useLocation, useNavigate } from 'react-router-dom';
 import './otp.css'
@@ -9,19 +9,25 @@ import { token  } from '../../redux/features/vendorAuthSlice'
 import {  token as userToken } from '../../redux/features/userAuthSlice'
 import {  userData } from '../../redux/features/userAuthSlice'
 import { useDispatch } from 'react-redux';
-import UseUserToken from '../../customeHooks/useUserToken';
-import UseVendorToken from '../../customeHooks/useVendorToken';
-function OtpVerify() {
-  const location =useLocation()
 
-  if(location.pathname === "/User/Login/Otp/Verify"   || location.pathname ===  '/User/Signup/Otp/Verify'){
-      
-    UseUserToken()
-}
-if(location.pathname === "/Vendor/Signup/Otp/Verify "  || location.pathname === '/Vendor/Login/Otp/Verify'){
-   UseVendorToken()
-}
+function OtpVerify() {
   const navigate = useNavigate()
+  const location =useLocation()
+useEffect(()=>{
+ console.log(location.pathname);
+ if(localStorage.getItem('user')){
+   if(location.pathname ==='/User/Login/Otp/Verify'  || location.pathname ===   '/User/Signup/Otp/Verify'){
+     console.log(2010);
+    navigate('/');
+   }
+ }
+ if(localStorage.getItem('vendor')){
+  if( location.pathname === '/Vendor/Login/Otp/Verify' || location.pathname ===  'Vendor/Signup/Otp/Verify' ){
+    navigate('/rentalpatner');
+   }
+ }
+},[])
+
   
   const user = location
   const [OTP, setOTP] = useState("");

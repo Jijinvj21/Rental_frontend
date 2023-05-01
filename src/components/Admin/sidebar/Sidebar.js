@@ -30,15 +30,21 @@ function Navbar() {
         <div className="cursor-pointer">
           <NavLink
             to="dashboard"
+            title="Dashboard"
             className={(({ isActive }) => isActive ? 'text-red-600' : 'text-white')}
           >
+            
             <span className=" flex gap-1 mt-6">
-              <svg className="h-6 w-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">  <path d="M21.21 15.89A10 10 0 1 1 8 2.83" />  <path d="M22 12A10 10 0 0 0 12 2v10z" /></svg>
+              
+              <svg   className="h-6 w-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">  <path d="M21.21 15.89A10 10 0 1 1 8 2.83" />  <path d="M22 12A10 10 0 0 0 12 2v10z" /></svg>
               {expand && <span className="text-white ">Dashboard</span>}
             </span>
           </NavLink>
           <NavLink
+                      title="Customers"
+
             to="/admin/user">
+              
             <span className="text-white flex gap-1 mt-6">
               <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -47,6 +53,8 @@ function Navbar() {
             </span>
           </NavLink>
           <NavLink
+                      title="Booking"
+
             to="admin_order">
             <span className="text-white flex gap-1 mt-6">
               <svg
@@ -67,6 +75,8 @@ function Navbar() {
             </span>
           </NavLink>
           <NavLink
+                      title="Vendors"
+
             to="/admin/vendor">
             <span className="text-white flex gap-1 mt-6">
               <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -76,6 +86,7 @@ function Navbar() {
             </span>
           </NavLink>
           <NavLink
+            title="Review"
 
             to="/admin/review">
             <span className="text-white flex gap-1 mt-6">
@@ -87,6 +98,7 @@ function Navbar() {
             </span>
           </NavLink>
           <NavLink
+            title="Chat"
 
             to="/admin/chat">
             <span className="text-white flex gap-1 mt-6">
@@ -95,11 +107,13 @@ function Navbar() {
 </svg>
 
 
-              {expand && <button className="text-white "   >Review</button>}
+              {expand && <button className="text-white "   >Chat</button>}
             </span>
           </NavLink>
           
           <NavLink
+                      title="Logout"
+
             onClick={() => {
               localStorage.removeItem('admin')
               dispatch(token(''));
