@@ -1,12 +1,12 @@
-import React from 'react'
-import SingleCycle from '../../components/User/SingleCycle'
+import React from "react";
+import SingleCycle from "../../components/User/SingleCycle";
 
 function SingleCyclePage() {
   return (
     <div>
- <SingleCycle/>
+      <SingleCycle />
     </div>
-  )
+  );
 }
 
-export default SingleCyclePage
+export default SingleCyclePage;

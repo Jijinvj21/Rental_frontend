@@ -1,10 +1,12 @@
-import React from 'react'
-import Review from '../../components/User/Review'
+import React from "react";
+import Review from "../../components/User/Review";
 
 function ReviewPage() {
   return (
-    <div><Review/></div>
-  )
+    <div>
+      <Review />
+    </div>
+  );
 }
 
-export default ReviewPage
+export default ReviewPage;

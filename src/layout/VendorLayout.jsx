@@ -1,17 +1,16 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
-import Sidebar from '../components/vendor/sidebar/vendorSidebar'
-import useVendorToken from '../customeHooks/useVendorToken'
-
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Sidebar from "../components/vendor/sidebar/vendorSidebar";
+import useVendorToken from "../customeHooks/useVendorToken";
 
 function UserLayout() {
-  useVendorToken()
+  useVendorToken();
   return (
     <div className="flex w-full ">
-    <Sidebar/>
-    <Outlet/>
+      <Sidebar />
+      <Outlet />
     </div>
-  )
+  );
 }
 
-export default UserLayout
+export default UserLayout;

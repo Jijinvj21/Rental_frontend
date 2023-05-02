@@ -1,20 +1,9 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { ToastContainer } from 'react-toastify';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
-
-
-
-
-import Admin from './Routes/Admin';
-import User from './Routes/user';
-import Ventor from './Routes/Ventor';
-
-
-
-
-
-
-
+import Admin from "./Routes/Admin";
+import User from "./Routes/user";
+import Ventor from "./Routes/Ventor";
 
 function App() {
   const toastConfig = {
@@ -26,34 +15,23 @@ function App() {
     draggable: true,
     toastClassName: "toast-container",
     bodyClassName: "toast-body",
-    theme:'dark'
+    theme: "dark",
   };
-
 
   return (
     <div className="App bg-bgColor text-txtColor font-txtFont text-xl min-h-screen   ">
-     
-     <ToastContainer {...toastConfig} />
+      <ToastContainer {...toastConfig} />
       <BrowserRouter>
         <Routes>
-          <Route path='/*' element={<User />} />
-          <Route path='/Vendor/*' element={<Ventor />} />
-          <Route path='/Admin/*' element={<Admin />} />
-
-
-
-
+          <Route path="/*" element={<User />} />
+          <Route path="/Vendor/*" element={<Ventor />} />
+          <Route path="/Admin/*" element={<Admin />} />
 
           {/* <Route path='/adminside' element={<Sidebar/>}/> */}
         </Routes>
       </BrowserRouter>
-
-      
     </div>
   );
 }
 
 export default App;
-
-
-

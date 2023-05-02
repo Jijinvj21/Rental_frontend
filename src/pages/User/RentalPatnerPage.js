@@ -1,10 +1,12 @@
-import React from 'react'
-import RentalPatner from '../../components/User/RentalPatner'
+import React from "react";
+import RentalPatner from "../../components/User/RentalPatner";
 
 function RentalPatnerPage() {
   return (
-    <div><RentalPatner/></div>
-  )
+    <div>
+      <RentalPatner />
+    </div>
+  );
 }
 
-export default RentalPatnerPage
+export default RentalPatnerPage;

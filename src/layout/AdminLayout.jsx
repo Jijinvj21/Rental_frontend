@@ -1,17 +1,16 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
-import Sidebar from '../components/Admin/sidebar/Sidebar'
-import useAdminToken from '../customeHooks/useAdminToken'
-
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Sidebar from "../components/Admin/sidebar/Sidebar";
+import useAdminToken from "../customeHooks/useAdminToken";
 
 function UserLayout() {
-  useAdminToken()
+  useAdminToken();
   return (
     <div className="flex w-full ">
-    <Sidebar/>
-    <Outlet/>
+      <Sidebar />
+      <Outlet />
     </div>
-  )
+  );
 }
 
-export default UserLayout
+export default UserLayout;

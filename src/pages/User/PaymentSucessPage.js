@@ -1,10 +1,12 @@
-import React from 'react'
-import PaymentSucess from '../../components/Payment/PaymentSucess'
+import React from "react";
+import PaymentSucess from "../../components/Payment/PaymentSucess";
 
 function PaymentSucessPage() {
   return (
-    <div><PaymentSucess/></div>
-  )
+    <div>
+      <PaymentSucess />
+    </div>
+  );
 }
 
-export default PaymentSucessPage
+export default PaymentSucessPage;

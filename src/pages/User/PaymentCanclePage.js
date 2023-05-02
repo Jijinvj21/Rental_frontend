@@ -1,11 +1,12 @@
-import React from 'react'
-import PaymentCancle from '../../components/Payment/PaymentCancle'
+import React from "react";
+import PaymentCancle from "../../components/Payment/PaymentCancle";
 
 function PaymentCanclePage() {
-
   return (
-    <div><PaymentCancle/></div>
-  )
+    <div>
+      <PaymentCancle />
+    </div>
+  );
 }
 
-export default PaymentCanclePage
+export default PaymentCanclePage;

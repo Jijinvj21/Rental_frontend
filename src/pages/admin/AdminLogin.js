@@ -1,10 +1,12 @@
-import React from 'react'
-import AdminSignup from '../../components/Admin/AdminSignup'
+import React from "react";
+import AdminSignup from "../../components/Admin/AdminSignup";
 
 function AdminLogin() {
   return (
-    <div><AdminSignup/></div>
-  )
+    <div>
+      <AdminSignup />
+    </div>
+  );
 }
 
-export default AdminLogin
+export default AdminLogin;

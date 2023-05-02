@@ -1,6 +1,5 @@
-
-import axios from 'axios';
-import { BASEURL } from './constrain';
+import axios from "axios";
+import { BASEURL } from "./constrain";
 
 const instance = axios.create({
   baseURL: BASEURL,

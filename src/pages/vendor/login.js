@@ -1,11 +1,12 @@
-import React from 'react'
-import VendorLogin from '../../components/Login/Login'
-
+import React from "react";
+import VendorLogin from "../../components/Login/Login";
 
 function login() {
   return (
-    <div><VendorLogin type="Vendor"/></div>
-  )
+    <div>
+      <VendorLogin type="Vendor" />
+    </div>
+  );
 }
 
-export default login
+export default login;

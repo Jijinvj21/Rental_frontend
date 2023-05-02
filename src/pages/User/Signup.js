@@ -1,11 +1,12 @@
-import React from 'react'
-import UserSignup from '../../components/Signup/UserSignup'
-
+import React from "react";
+import UserSignup from "../../components/Signup/UserSignup";
 
 function Signup() {
   return (
-    <div><UserSignup type="User"/></div>
-  )
+    <div>
+      <UserSignup type="User" />
+    </div>
+  );
 }
 
-export default Signup
+export default Signup;
