@@ -41,7 +41,8 @@ function UserSIgnup(props) {
               navigate(`/${props.type}/Signup/Otp/Verify`, { state: user });
             })
             .catch((err) => {
-              toast(`${err.response.data.data}`);
+              console.log(err);
+              toast(`${err.response?.data?.data}`);
             });
         })
         .catch((ValidationError) => {

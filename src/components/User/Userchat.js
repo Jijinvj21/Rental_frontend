@@ -15,7 +15,7 @@ function Userchat() {
   const data = JSON.parse(userData);
 
   useEffect(() => {
-    socket.current = io(process.env.REACT_APP_SOCKET_ID);
+    socket.current = io('ws://localhost:9000');
     socket.current.on("getMessage", ({ senderId, message, sender }) => {
       setArrivelMsg({
         senderId,

@@ -310,7 +310,7 @@ function SingleCycle() {
 
             <div className="z-0 md:w-1/2 pt-2">
               <PayPalScriptProvider
-                options={{ "client-id": process.env.REACT_APP_PAYPAL_ID }}
+                options={{ "client-id": 'AUph16OQlgs0Af8jR_YZyxgY88VLPyPVk_qU_MJUZ1O0b9y4VZ0Zxb7wFcxDd3n5YufGHhRTbSuFytNW' }}
               >
                 <PayPalButtons
                   style={{

@@ -42,7 +42,7 @@ function Chat() {
   // }
 
   useEffect(() => {
-    socket.current = io(process.env.REACT_APP_SOCKET_ID);
+    socket.current = io('ws://localhost:9000');
   }, [userId]);
   useEffect(() => {
     arrivalMsg && setMsg((prev) => [...prev, arrivalMsg]);
