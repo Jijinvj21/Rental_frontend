@@ -94,7 +94,7 @@ function Cycle(props) {
           <div className="grid md:grid-cols-3   justify-items-center   ">
             {props?.data?.data?.user?.map((data) => {
               return (
-                <div className=" max-w-sm shadow-lg overflow-hidden rounded-3xl m-5 ">
+                <div className=" max-w-sm shadow-lg overflow-hidden rounded-3xl m-5 bg-boxColor ">
                   <div className="relative">
                     <div className=" absolute right-1 top-3 ">
                       <p
@@ -107,26 +107,19 @@ function Cycle(props) {
                       </p>
                     </div>
                   </div>
-                  <img className=" w-64 h-48" src={data.image} alt="rhcp" />
+                  <img className=" w-64 h-48 " src={data.image} alt="rhcp"  />
+                  
 
-                  <div className=" w-64 p-4 text-center bg-boxColor">
+                  <div className=" w-64 p-4 text-center mt-3 bg-boxColor">
                     <div className="text-2xl pb-2 ">{data.name}</div>
-                    <span className=" text-2xl  mt-4 grid grid-cols-3">
+                    <span className=" text-2xl  my-4 grid grid-cols-3">
                       <hr />
                       <h1 className="-mt-4 text-center text-[16px]">
                         ${data.price}/day
                       </h1>
                       <hr />
                     </span>
-                    <div className="mt-4 ">
-                      <ul className="flex justify-center">
-                        <li className="mx-1 text-yellow-400">*</li>
-                        <li className="mx-1 text-yellow-400">*</li>
-                        <li className="mx-1 text-yellow-400">*</li>
-                        <li className="mx-1 text-yellow-400">*</li>
-                        <li className="mx-1 text-yellow-400">*</li>
-                      </ul>
-                    </div>
+                   
                   </div>
                 </div>
               );

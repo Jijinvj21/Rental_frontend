@@ -91,7 +91,7 @@ function Header() {
                 {data?.name ? (
                   <div className="relative flex justify-center">
                     <span
-                      className="flex border-1"
+                      className="flex border-1 cursor-pointer"
                       onClick={() => {
                         isOpen && setIsOpen(false);
                         setDropdown((prev) => !prev);
@@ -99,7 +99,7 @@ function Header() {
                     >
                       {data?.image ? (
                         <img
-                          className="h-8 w-8 rounded-full  mr-1"
+                          className="h-8 w-8 rounded-full  cursor-pointer mr-1"
                           src={data?.image}
                           alt="example"
                         />

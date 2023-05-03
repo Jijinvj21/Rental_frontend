@@ -20,7 +20,7 @@ function RentalPatner() {
           EARN REGULAR EARNING WITH YOUR CYCLE
         </h1>
         <h1 className="text-1xl text-center md:text-2xl md:p-3 p-5">
-          RENTAL let you ern throught bookings from customers all over india
+          Rental let you earn through bookings from customers 
         </h1>
         <h1 className="text-1xl text-center md:text-2xl md:p-3 p-5">
           {" "}
@@ -48,7 +48,7 @@ function RentalPatner() {
         </div>
         <div className="flex flex-col justify-center items-center p-3">
           <h1 className="text-2xl text-center md:text-3xl  md:tracking-widest  ">
-            Why Rentle exists?
+            Why Rental exists?
           </h1>
           <h1 className="text-xs text-center md:text-xl py-5 ">
             The world is drowning in stuff. A fact most consumers are aware of.

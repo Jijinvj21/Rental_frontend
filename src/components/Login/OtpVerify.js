@@ -56,7 +56,7 @@ function OtpVerify() {
               if (data.data.data === "vendor/signup") {
                 navigate("/vendor/login");
               } else if (data.data.data === "user/signup") {
-                navigate("/user/signup");
+                navigate("/user/login");
               } else if (data.data.data.from === "vendor/login") {
                 const jsonString = JSON.stringify(data.data.data.vendorData);
                 localStorage.setItem("vendorData", jsonString);

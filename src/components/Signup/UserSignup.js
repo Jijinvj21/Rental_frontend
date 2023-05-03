@@ -88,9 +88,9 @@ function UserSIgnup(props) {
 
               <Link to={`/${props.type}/login`}>
                 <h6 className="text-base text-center mt-10">
-                  ALREDY HAVE AN ACCOUNT{" "}
+                  ALREADY HAVE AN ACCOUNT ?{" "}
                 </h6>
-                <h6 className="text-base text-center mt-2 ">lOGIN </h6>
+                <h6 className="text-base text-center mt-2 ">LOGIN </h6>
               </Link>
             </div>
             <Link to="/">

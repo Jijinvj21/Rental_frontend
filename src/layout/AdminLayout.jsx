@@ -7,7 +7,10 @@ function UserLayout() {
   useAdminToken();
   return (
     <div className="flex w-full ">
+            <div className="h-screen fixed">
       <Sidebar />
+            </div>
+
       <Outlet />
     </div>
   );

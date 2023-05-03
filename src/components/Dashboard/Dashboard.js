@@ -3,7 +3,7 @@ import Chart from "./PieChart";
 
 function Dashboard(props) {
   return (
-    <div className="w-full  pt-20 overflow-auto  h-[1000] md:h-[880px] ">
+    <div className="w-full  pt-20 overflow-auto  h-grow ">
       <div className="grid md:grid-cols-3 w-3/4  mx-auto ">
         <div className="w-full p-5  ">
           <div className="bg-boxColor w-full h-20 rounded-md flex flex-col  justify-center items-center p-2">

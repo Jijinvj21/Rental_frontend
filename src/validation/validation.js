@@ -176,10 +176,10 @@ export const addCycleValidationSchema = Yup.object().shape({
 export const imageValidationSchema = Yup.object().shape({
   image: Yup.mixed()
     .required("Image is required")
-    .test("fileType", "Invalid file type", (value) => {
+    .test("fileType", "Invalid file type (jpeg , png , jpeg)", (value) => {
       if (!value) return true;
       return (
-        value && ["image/jpeg", "image/png", "image/gif"].includes(value.type)
+        value && ["image/jpeg", "image/png", "image/jpg" ].includes(value.type)
       );
     })
     .test("fileSize", "File size is too large size must be 5MB", (value) => {

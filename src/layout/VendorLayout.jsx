@@ -6,8 +6,10 @@ import useVendorToken from "../customeHooks/useVendorToken";
 function UserLayout() {
   useVendorToken();
   return (
-    <div className="flex w-full ">
-      <Sidebar />
+    <div className="flex w-full">
+      <div className="h-screen fixed">
+        <Sidebar />
+      </div>
       <Outlet />
     </div>
   );
