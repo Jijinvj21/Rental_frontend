@@ -27,7 +27,6 @@ function App() {
           <Route path="/Vendor/*" element={<Ventor />} />
           <Route path="/Admin/*" element={<Admin />} />
 
-          {/* <Route path='/adminside' element={<Sidebar/>}/> */}
         </Routes>
       </BrowserRouter>
     </div>

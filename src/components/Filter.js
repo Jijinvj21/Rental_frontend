@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "../instance/axios";
 import { useDispatch, useSelector } from "react-redux";
 import { data } from "../redux/features/dataManagementSlice";
 import { status } from "../redux/features/dataManagementSlice";
+import { loading } from "../redux/features/dataManagementSlice";
+
 import { useLocation } from "react-router-dom";
 
 function Filter(props) {
@@ -31,6 +33,7 @@ function Filter(props) {
       try {
         const userDate = localStorage.getItem("userDate");
         const date = JSON.parse(userDate);
+  
         const url = await axios.post(
           `/filter/filter?page=${
             tableManagement.page ? tableManagement.page : ""
@@ -55,8 +58,9 @@ function Filter(props) {
             },
           }
         );
-
         dispatch(data(url?.data));
+        console.log(url?.data)
+        dispatch(loading(false));
         url ? dispatch(status(false)) : dispatch(status(""));
       } catch (error) {
         console.log(error);

@@ -571,7 +571,7 @@ function UserTable() {
           table.length !== 0 ? (
             ""
           ) : (
-            <div className="flex  min-h-[200px]   justify-center items-center">
+            <div className="flex  min-h-[600px]   justify-center items-center">
               <p className=" text-center "> NO DATA ARE AVAILABLE</p>
             </div>
           )

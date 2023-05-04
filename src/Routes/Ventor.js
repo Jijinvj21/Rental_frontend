@@ -10,6 +10,8 @@ import Accessories from "../pages/vendor/Accessories";
 import Order from "../pages/vendor/Order";
 import VendorReview from "../pages/vendor/VendorReview";
 import VendorDashboard from "../pages/vendor/VendorDashboard";
+import PageNotFound from '../components/Error/pageNotFound'
+
 
 function Ventor() {
   return (
@@ -27,7 +29,7 @@ function Ventor() {
             <Route path="/review" element={<VendorReview />} />
             <Route path="/dashboard" element={<VendorDashboard />} />
           </Route>
-          <Route path={"*"} element={"kfif"} />
+          <Route path={"*"} element={<PageNotFound/>} />
         </Route>
       </Routes>
     </>

@@ -8,6 +8,8 @@ import AdminOrder from "../pages/admin/AdminOrder";
 import Chat from "../components/chat/Chat";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import AdminReview from "../pages/admin/AdminReview";
+import PageNotFound from '../components/Error/pageNotFound'
+
 
 function Admin() {
   return (
@@ -23,7 +25,7 @@ function Admin() {
           <Route path="/dashboard" element={<AdminDashboard />} />
           <Route path="/review" element={<AdminReview />} />
         </Route>
-        <Route path={"*"} element={"kfif"} />
+        <Route path={"*"} element={<PageNotFound/>} />
       </Routes>
     </>
   );

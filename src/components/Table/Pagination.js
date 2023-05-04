@@ -39,11 +39,11 @@ function Pagination() {
   };
   return (
     <div className="flex flex-col items-center">
-      <span className="text-sm ">
+      {/* <span className="text-sm ">
         Showing <span className="font-semibold "></span> to{" "}
         <span className="font-semibold ">{first}</span> of{" "}
         <span className="font-semibold ">{last}</span> Entries {i?.data?.total}
-      </span>
+      </span> */}
       <div className="inline-flex mt-2 xs:mt-0">
         <button onClick={handleprevious} className={pre}>
           <svg

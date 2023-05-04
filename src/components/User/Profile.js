@@ -26,14 +26,79 @@ function Profile() {
   } else if (data?.image !== image || data?.name !== user) {
     button = false;
   }
-
   const token = localStorage.getItem("user");
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const urlPattern = /^https?:\/\/\S+$/;
-      if (urlPattern.test(image)) {
-        setUplod(false);
+      if (image) {
+        const urlPattern = /^https?:\/\/\S+$/;
+        if (urlPattern.test(image)) {
+          setUplod(false);
+          profileNameSchema
+            .validate({ name: user })
+            .then(async () => {
+              await axios
+                .post("/profileUpdate", userProfile, {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "multipart/form-data",
+                  },
+                })
+                .then((data) => {
+                  toast.success(`${data.data.message}`);
+                  const jsonString = JSON.stringify(data.data.userData[0]);
+                  localStorage.setItem("userData", jsonString);
+                  setUplod(true);
+                })
+                .catch((error) => {
+                  toast(`${error.response.data.message}`);
+
+                  setUplod(true);
+                });
+            })
+            .catch((err) => {
+              toast(`${err}`);
+              setUplod(true);
+            });
+        } else {
+          imageValidationSchema
+            .validate({ image: image })
+            .then(async () => {
+              profileNameSchema
+                .validate({ name: user })
+                .then(async () => {
+                  setUplod(false);
+
+                  await axios
+                    .post("/profileUpdate", userProfile, {
+                      headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "multipart/form-data",
+                      },
+                    })
+                    .then((data) => {
+                      toast.success(`${data.data.message}`);
+                      const jsonString = JSON.stringify(data.data.userData[0]);
+                      localStorage.setItem("userData", jsonString);
+                      //set data in to local storage
+                      setUplod(true);
+                    })
+                    .catch((error) => {
+                      toast(`${error.response.data.message}`);
+                      setUplod(true);
+                    });
+                })
+                .catch((err) => {
+                  toast(`${err}`);
+                  setUplod(true);
+                });
+            })
+            .catch((err) => {
+              toast(`${err}`);
+              setUplod(true);
+            });
+        }
+      } else {
         profileNameSchema
           .validate({ name: user })
           .then(async () => {
@@ -60,43 +125,6 @@ function Profile() {
             toast(`${err}`);
             setUplod(true);
           });
-      } else {
-        imageValidationSchema
-          .validate({ image: image })
-          .then(async () => {
-            profileNameSchema
-              .validate({ name: user })
-              .then(async () => {
-                setUplod(false);
-
-                await axios
-                  .post("/profileUpdate", userProfile, {
-                    headers: {
-                      Authorization: `Bearer ${token}`,
-                      "Content-Type": "multipart/form-data",
-                    },
-                  })
-                  .then((data) => {
-                    toast.success(`${data.data.message}`);
-                    const jsonString = JSON.stringify(data.data.userData[0]);
-                    localStorage.setItem("userData", jsonString);
-                    //set data in to local storage
-                    setUplod(true);
-                  })
-                  .catch((error) => {
-                    toast(`${error.response.data.message}`);
-                    setUplod(true);
-                  });
-              })
-              .catch((err) => {
-                toast(`${err}`);
-                setUplod(true);
-              });
-          })
-          .catch((err) => {
-            toast(`${err}`);
-            setUplod(true);
-          });
       }
     } catch (error) {
       console.log(error.response.data.message);
@@ -116,9 +144,7 @@ function Profile() {
               <div
                 className="rounded-full  bg-bgColor w-32 h-32 p-2 md:w-64 md:h-64 flex justify-center text-center items-center"
                 style={{
-                  backgroundImage: `url(${
-                    data?.image ? data?.image : preview
-                  })`,
+                  backgroundImage: `url(${preview ? preview : data?.image})`,
                   backgroundSize: "cover",
                   backgroundRepeat: "no-repeat",
                   backgroundPosition: "center",
@@ -149,7 +175,7 @@ function Profile() {
               type="text"
               readOnly
               className="outline-none rounded-full text-center cursor-default text-sm md:text-lg bg-bgColor p-2 mb-2 md:m-1   md:w-44"
-              value={"4789633214"}
+              value={data.phone}
             />
           </div>
           {button ? (

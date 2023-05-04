@@ -17,6 +17,7 @@ function Userchat() {
   useEffect(() => {
     socket.current = io('ws://localhost:9000');
     socket.current.on("getMessage", ({ senderId, message, sender }) => {
+      console.log(message);
       setArrivelMsg({
         senderId,
         message,
@@ -32,14 +33,15 @@ function Userchat() {
         if (Array.isArray(prev)) {
           return [
             ...prev,
-            { sender: arrivalMsg.sender, message: arrivalMsg.message },
+            { sender: arrivalMsg.sender, text: arrivalMsg.message },
           ];
         } else {
-          return [{ sender: arrivalMsg.sender, message: arrivalMsg.message }];
+          return [{ sender: arrivalMsg.sender, text: arrivalMsg.message }];
         }
       });
     }
   }, [arrivalMsg]);
+  
 
   useEffect(() => {
     socket.current.emit("addUser", { userId: data?._id, role: "user" });
@@ -144,10 +146,11 @@ function Userchat() {
 
   const messages = () => {
     return (
-      <div>
-        <div className="overflow-auto h-[500px]  lg:h-[730px] m-5  scrollbar scrollbar-thumb-bgColor scrollbar-thumb-rounded-full scrollbar-w-3 ">
+      <div className="w-full">
+        <div className="overflow-auto h-[500px]  md:h-[500px] m-5  scrollbar scrollbar-thumb-bgColor scrollbar-thumb-rounded-full scrollbar-w-3 ">
           {message
             ? message.map((data) => {
+              console.log(data);
                 return (
                   <div ref={scrollRef}>
                     <Messages Messages={data} own={!data.admin} />
@@ -183,3 +186,7 @@ function Userchat() {
 }
 
 export default Userchat;
+
+
+
+

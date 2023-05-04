@@ -4,10 +4,7 @@ import axios from "../../instance/axios";
 import { io } from "socket.io-client";
 
 import Conversation from "./Conversation";
-import Search from "../Table/Search";
-import Limit from "../Table/Limit";
 import Pagination from "../Table/Pagination";
-import Clear from "../Table/Clear";
 import Modal from "../Table/Modal";
 import Messages from "./Messages";
 
@@ -18,7 +15,6 @@ function Chat() {
   const [conversationId, setConversationId] = useState();
   const [users, setUsers] = useState([]);
   // const [socket, setSocket] = useState(null)
-  const [close, setClose] = useState();
   const [currentChat, setCurrentChat] = useState({
     // userChat: null,
     userId: null,
@@ -34,12 +30,11 @@ function Chat() {
     if (senderId === userId ? userId : currentChat.userId)
       setArrivelMsg({
         senderId,
-        message,
+        text:message,
         sender,
         date: Date.now(),
       });
   });
-  // }
 
   useEffect(() => {
     socket.current = io('ws://localhost:9000');
@@ -47,7 +42,6 @@ function Chat() {
   useEffect(() => {
     arrivalMsg && setMsg((prev) => [...prev, arrivalMsg]);
   }, [arrivalMsg, conversationId]);
-
 
   useEffect(() => {
     socket.current.emit("addUser", { role: "admin" });
@@ -70,10 +64,8 @@ function Chat() {
   };
 
 
-  function modalClose(id, closeModal) {
+  function modalClose(id) {
     setUserId(id);
-    alert(id);
-    setClose(() => closeModal);
     axios
       .post("chat/newConversation", {
         userId: id ? id : currentChat.userId,
@@ -100,34 +92,25 @@ function Chat() {
         console.error(error);
       });
   }
-
+console.log(msg);
+ 
   function userList() {
     return (
+      !msg.length?
       <button
         onClick={handleUsers}
-        className="bg-bgColor mx-auto pl-2 pr-2 w-1/2 md:w-1/5  md:h-12 rounded-full"
+        className="bg-bgColor mx-auto pl-2 pr-2 w-1/2 md:w-1/5  md:h-12 rounded-full flex justify-center items-center"
       >
-        User's
-      </button>
+        User's <svg class="h-6 w-6 text-white"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <path d="M18 15l-6-6l-6 6h12" transform="rotate(180 12 12)" /></svg>
+      </button>:''
     );
   }
 
   function user() {
     return (
-      <div className=" md:-mt-10  md:overflow-hidden scrollbar scrollbar-thumb-boxColor scrollbar-thumb-rounded-full scrollbar-w-3  ">
+      <div className=" md:-mt-10 w-full  md:overflow-hidden scrollbar scrollbar-thumb-boxColor scrollbar-thumb-rounded-full scrollbar-w-3  ">
         <div className="  rounded-2xl     ">
-          <div className=" flex md:flex-row flex-col w-full md:p-2 items-center justify-center">
-            <Search color={"bgColor"} />
-            <div className="md:pt-5 -pt-5 ">
-              <Limit color={"bgColor"} />
-            </div>
-            <Clear
-              style={{
-                style:
-                  "text-xs md:text-md bg-bgColor md:mt-10 -mt-10 text-center  opacity-70  m-5 h-10  w-20 rounded-lg  focus:outline-none ",
-              }}
-            />
-          </div>
+       
 
           <div className="overflow-auto h-[500px] md:h-[500px] lg:h-[540px]   scrollbar scrollbar-thumb-bgColor scrollbar-thumb-rounded-full scrollbar-w-3 ">
             {users?.map((data) => {
@@ -149,7 +132,6 @@ function Chat() {
   const handleSubmit = (e) => {
     e.preventDefault();
     //socket
-    alert(newMessage);
     socket.current.emit("send-message", {
       userId: currentChat.userId,
       message: newMessage,
@@ -173,7 +155,7 @@ function Chat() {
   };
 
   return (
-    <div className="flex justify-center items-center mx-auto">
+    <div className="flex justify-center items-center w-1/2 mx-auto my-auto h-screen">
       <div
         className={
           msg
@@ -182,14 +164,14 @@ function Chat() {
         }
       >
         <div className="m-5">
-          <Modal close={close} modal={user()} button={userList()} />
+          <Modal  modal={user()} button={userList()} />
         </div>
-        {msg ? (
+        {msg.length ? (
           <>
             <div className="overflow-auto h-[600px]  lg:h-[620px]  m-5  scrollbar scrollbar-thumb-bgColor scrollbar-thumb-rounded-full scrollbar-w-3 ">
               {
                 msg
-                  ? msg?.map((data) => {
+                ? msg?.map((data) => {
                       return (
                         <div ref={scrollRef}>
                           <Messages
@@ -220,11 +202,10 @@ function Chat() {
             </div>
           </>
         ) : (
-          <div className="flex justify-center items-center  ">
-            {" "}
+          <div className="flex justify-center items-center h-3/4 ">
             <h1 className="text-center text-2xl md:text-3xl m-3">
               Open a conversation to start a chat
-            </h1>{" "}
+            </h1>
           </div>
         )}
       </div>

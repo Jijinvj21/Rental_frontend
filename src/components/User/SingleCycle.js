@@ -104,7 +104,7 @@ function SingleCycle() {
           <h1 className="text-center -pt-10">POST YOUR REVIEW</h1>
           <div className="flex justify-center p-5">
             <ReactStar
-              activeColor="#27363b"
+              activeColor="#ffbe0c"
               size={40}
               count={5}
               onChange={(e) => setRating({ ...rating, starRating: e })}
@@ -348,33 +348,40 @@ function SingleCycle() {
       <div className="p-10">
         <div className="flex justify-between">
           <h1 className="pl-1">Reviews</h1>
+          {
+!userBooked ? (
+  <div className="cursor-text ">
+    you haven't purchased this product yet
+  </div>
+) : !message ? (
+  <div className="cursor-text">You allready added</div>
+) :
           <Modal
             modal={starReview()}
             button={
-              !userBooked ? (
-                <div className="cursor-text">
-                  you haven't purchased this product yet
-                </div>
-              ) : !message ? (
-                <div className="cursor-text">You allready added</div>
-              ) : (
-                "ADD REVIEW"
-              )
+               <button className=" bg-boxColor p-2 rounded-xl hover:bg-slate-500" >ADD REVIEW</button>
+                
+              
             }
           />
+          }
         </div>
         <hr className="  my-2  bg-gray-200 border-1 dark:bg-gray-700" />
-
-        {review?.map((data) => {
+        { review?.length?
+        review?.map((data) => {
+          console.log('data');
           return (
+            
             <>
-              <div className="grid md:grid-cols-3 grid-row   mx-auto ">
+            {
+            <>
+            <div className="grid md:grid-cols-3 grid-row   mx-auto ">
                 <div className="p-5">{data?.user?.name}</div>
                 <div className="flex p-5 ">
                   {Array.from({ length: data.stars }).map((_, index) => (
                     <svg
                       key={index}
-                      className="h-5 w-5 ml-1 text-white"
+                      className="h-5 w-5 ml-1 text-[#ffbe0c]"
                       viewBox="0 0 24 24"
                       fill="currentColor"
                       stroke="currentColor"
@@ -387,10 +394,16 @@ function SingleCycle() {
                 </div>
                 <div className="p-5">{data?.message}</div>
               </div>
-              <hr className="  my-2  bg-gray-200 border-1 dark:bg-gray-700" />
+              <hr className="  my-2  bg-gray-200 border-1 dark:bg-gray-700" /> </>
+
+            }
+              
             </>
           );
-        })}
+        }) :<div className="w-full "> 
+          <h1 className="text-center mt-10">THERE IS NO REVIEW YET</h1>
+        </div>
+        }
       </div>
     </div>
   );

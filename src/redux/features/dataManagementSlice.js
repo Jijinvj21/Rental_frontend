@@ -11,6 +11,7 @@ export const dataManagementSlice = createSlice({
     page: 1,
     status: false,
     data: [],
+    loading:true,
   },
   reducers: {
     search: (state, action) => {
@@ -38,8 +39,11 @@ export const dataManagementSlice = createSlice({
     data: (state, action) => {
       state.data = action.payload;
     },
+    loading: (state, action) => {
+      state.loading = action.payload;
+    },
   },
 });
 
-export const { search, sort, pagination, limit, order, page, status, data } =
+export const { search, sort, pagination, limit, order, page, status, data,loading } =
   dataManagementSlice.actions;

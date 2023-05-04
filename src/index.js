@@ -5,14 +5,14 @@ import App from "./App";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { ErrorBoundary } from "react-error-boundary";
-import Fallback from "./heplers/ErrorBoundary";
+import { lazy } from "react";
+const ErrorPage = lazy(() => import("./components/Error/Error"));
 
 const root = document.getElementById("root");
 
-// Render the application with an ErrorBoundary component
 const rootContainer = createRoot(root);
 rootContainer.render(
-  <ErrorBoundary FallbackComponent={Fallback} onReset={() => {}}>
+  <ErrorBoundary FallbackComponent={ErrorPage} onReset={() => {}}>
     <Provider store={store}>
       <App />
     </Provider>

@@ -86,10 +86,23 @@ function Order() {
 
   return (
     <div className=" pt-14 ">
+            <h1 className="text-center text-2xl pt-10">BOOKING LIST</h1>
+
       <Filter props={"booking"} limit={""} />
-      <User users={table} items={true} />
+      <User
+        users={table}
+        items={true}
+        nodatamsg={
+          table.length !== 0 ? (
+            ""
+          ) : (
+            <div className="flex  min-h-[600px]   justify-center items-center">
+              <p className=" text-center "> NO DATA ARE AVAILABLE</p>
+            </div>
+          )
+        }
+      />
     </div>
-    //
   );
 }
 export default Order;

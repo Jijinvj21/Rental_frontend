@@ -1,12 +1,22 @@
 import React, { useEffect, useState } from "react";
 import User from "../../components/Table/Table";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Filter from "../../components/Filter";
 import useAdminToken from "../../customeHooks/useAdminToken";
+import axios from "../../instance/axios";
+import { status } from "../../redux/features/dataManagementSlice";
+
+
+
 
 function UserTable() {
   const [user, setUser] = useState([]);
   useAdminToken();
+  const dispatch = useDispatch();
+
+  const updateStatus = () => {
+    dispatch(status(true));
+  };
 
   const tableManagement = useSelector((state) => state.dataManagement);
 
@@ -16,13 +26,30 @@ function UserTable() {
 
   let table = [];
   user?.map((data, index) => {
-    let { name, stars, message, product } = data;
+    let {_id, name, stars, message, product,status } = data;
 
     let table_head = {
       User_Name: name,
       Product: product.name,
       Rating: stars,
       Message: message,
+      Status: (
+        <button  className="text-white bg-bgColor hover:bg-[#24292F]/90  focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 mr-2 mb-2 "
+        onClick={() => {
+          axios
+                          .post(`/review/blockReview`, { id:_id })
+                          .then((responce) => {
+                            updateStatus();
+
+                          })
+                          .catch((error) => {
+                            console.log(error);
+                          });
+                      
+        }}>
+          {status ? "Block" : "Unblock"}
+        </button>
+      ),
     };
     table.push(table_head);
     return 0;

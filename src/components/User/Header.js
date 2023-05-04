@@ -13,8 +13,9 @@ function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const handieLogout = () => {
-    localStorage.removeItem("user");
     localStorage.removeItem("userData");
+    localStorage.removeItem("userDate");
+    localStorage.removeItem("user");
     navigate("/user/login");
   };
   const handieVendorLogout = () => {
