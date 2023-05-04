@@ -43,8 +43,7 @@ function Review() {
       .post(`/review/editReview`, {
         rating,
       })
-      .then((data) => {
-        console.log(data);
+      .then(() => {
         
         toast(`REVIEW EDITED`);
         

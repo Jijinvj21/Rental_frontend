@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 function Modal(props) {
-  console.log(props.close);
   const [isOpen, setIsOpen] = useState(false);
   const openModal = () => {
     setIsOpen(true);
@@ -10,14 +9,13 @@ function Modal(props) {
   const closeModal = () => {
     setIsOpen(false);
 
-    props.setIsOpen(false)
+    props.setIsOpen(false);
   };
-  console.log(isOpen);
-useEffect(() => {
-  if(props.isOpen){
-    closeModal()
-  }
-},[props.isOpen])
+  useEffect(() => {
+    if (props.isOpen) {
+      closeModal();
+    }
+  }, [props.isOpen]);
   return (
     <div className="relative">
       <button

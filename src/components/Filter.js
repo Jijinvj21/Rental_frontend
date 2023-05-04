@@ -58,9 +58,18 @@ function Filter(props) {
             },
           }
         );
-        dispatch(data(url?.data));
-        console.log(url?.data)
+        console.log(url.data.user.length);
+        // if(url.data.user.length !==0 ){
+        //   alert(11)
+        //   dispatch(loading(true));
+        // }else{
+        //   alert(99)
+        //   dispatch(loading(false));
+
+        // }
         dispatch(loading(false));
+
+        dispatch(data(url?.data));
         url ? dispatch(status(false)) : dispatch(status(""));
       } catch (error) {
         console.log(error);

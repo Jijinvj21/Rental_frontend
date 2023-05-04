@@ -9,7 +9,6 @@ import Modal from "../Table/Modal";
 import Messages from "./Messages";
 
 function Chat() {
-
   const admin = localStorage.getItem("admin");
 
   const [conversationId, setConversationId] = useState();
@@ -30,14 +29,14 @@ function Chat() {
     if (senderId === userId ? userId : currentChat.userId)
       setArrivelMsg({
         senderId,
-        text:message,
+        text: message,
         sender,
         date: Date.now(),
       });
   });
 
   useEffect(() => {
-    socket.current = io('ws://localhost:9000');
+    socket.current = io("ws://localhost:9000");
   }, [userId]);
   useEffect(() => {
     arrivalMsg && setMsg((prev) => [...prev, arrivalMsg]);
@@ -62,7 +61,6 @@ function Chat() {
         console.error(error);
       });
   };
-
 
   function modalClose(id) {
     setUserId(id);
@@ -92,17 +90,32 @@ function Chat() {
         console.error(error);
       });
   }
-console.log(msg);
- 
+
   function userList() {
-    return (
-      !msg.length?
+    return !msg.length ? (
       <button
         onClick={handleUsers}
         className="bg-bgColor mx-auto pl-2 pr-2 w-1/2 md:w-1/5  md:h-12 rounded-full flex justify-center items-center"
       >
-        User's <svg class="h-6 w-6 text-white"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <path d="M18 15l-6-6l-6 6h12" transform="rotate(180 12 12)" /></svg>
-      </button>:''
+        User's{" "}
+        <svg
+          class="h-6 w-6 text-white"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          {" "}
+          <path stroke="none" d="M0 0h24v24H0z" />{" "}
+          <path d="M18 15l-6-6l-6 6h12" transform="rotate(180 12 12)" />
+        </svg>
+      </button>
+    ) : (
+      ""
     );
   }
 
@@ -110,8 +123,6 @@ console.log(msg);
     return (
       <div className=" md:-mt-10 w-full  md:overflow-hidden scrollbar scrollbar-thumb-boxColor scrollbar-thumb-rounded-full scrollbar-w-3  ">
         <div className="  rounded-2xl     ">
-       
-
           <div className="overflow-auto h-[500px] md:h-[500px] lg:h-[540px]   scrollbar scrollbar-thumb-bgColor scrollbar-thumb-rounded-full scrollbar-w-3 ">
             {users?.map((data) => {
               return (
@@ -164,14 +175,14 @@ console.log(msg);
         }
       >
         <div className="m-5">
-          <Modal  modal={user()} button={userList()} />
+          <Modal modal={user()} button={userList()} />
         </div>
         {msg.length ? (
           <>
             <div className="overflow-auto h-[600px]  lg:h-[620px]  m-5  scrollbar scrollbar-thumb-bgColor scrollbar-thumb-rounded-full scrollbar-w-3 ">
               {
                 msg
-                ? msg?.map((data) => {
+                  ? msg?.map((data) => {
                       return (
                         <div ref={scrollRef}>
                           <Messages

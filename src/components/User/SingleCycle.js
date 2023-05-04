@@ -57,8 +57,7 @@ function SingleCycle() {
       .post(`/review/getReviews`, {
         productId: location.state._id,
       })
-      .then((data) => {
-        console.log(data.data);
+      .then(() => {
         setReview(data.data);
       })
       .catch((error) => {
@@ -369,7 +368,6 @@ function SingleCycle() {
         <hr className="  my-2  bg-gray-200 border-1 dark:bg-gray-700" />
         { review?.length?
         review?.map((data) => {
-          console.log('data');
           return (
             
             <>

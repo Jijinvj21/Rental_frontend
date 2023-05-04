@@ -17,7 +17,6 @@ function Userchat() {
   useEffect(() => {
     socket.current = io('ws://localhost:9000');
     socket.current.on("getMessage", ({ senderId, message, sender }) => {
-      console.log(message);
       setArrivelMsg({
         senderId,
         message,
@@ -150,7 +149,6 @@ function Userchat() {
         <div className="overflow-auto h-[500px]  md:h-[500px] m-5  scrollbar scrollbar-thumb-bgColor scrollbar-thumb-rounded-full scrollbar-w-3 ">
           {message
             ? message.map((data) => {
-              console.log(data);
                 return (
                   <div ref={scrollRef}>
                     <Messages Messages={data} own={!data.admin} />
