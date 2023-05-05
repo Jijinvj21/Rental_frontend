@@ -63,7 +63,7 @@ function UserTable() {
     theme: "dark",
   };
   return (
-    <div className="overflow-auto h-screen" style={{ width: "100%" }}>
+    <div className="overflow-auto h-screen max-w-[350px] md:min-w-full">
       <div className="text-2xl text-center pt-10 ">USERE LIST</div>
       <Filter props={"user"} />
       <User

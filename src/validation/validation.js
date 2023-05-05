@@ -179,7 +179,7 @@ export const imageValidationSchema = Yup.object().shape({
     .test("fileType", "Invalid file type (jpeg , png , jpeg)", (value) => {
       if (!value) return true;
       return (
-        value && ["image/jpeg", "image/png", "image/jpg" ].includes(value.type)
+        value && ["image/jpeg", "image/png", "image/jpg"].includes(value.type)
       );
     })
     .test("fileSize", "File size is too large size must be 5MB", (value) => {
@@ -222,4 +222,8 @@ export const accessoriesValidationSchema = Yup.object().shape({
     .matches(/^\d{1,4}$/, "PricemMust be a number with no more than 4 digits")
     .min(0, "Price must be positive")
     .required("Price is required"),
+});
+
+export const chatSchema = Yup.object().shape({
+  inputField: Yup.string().required("There is no message"),
 });

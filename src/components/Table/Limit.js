@@ -8,7 +8,7 @@ function Limit(props) {
   const i = useSelector((state) => state.dataManagement.limit);
   const dispatch = useDispatch();
   if (props.drop) {
-    dispatch(limit(6));
+    dispatch(limit(i === 5 ? 6 : i));
   }
 
   const handleLimitSelect = (event) => {

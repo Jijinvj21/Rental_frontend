@@ -10,13 +10,26 @@ import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 function SingleCycle() {
   let date = localStorage.getItem("userDate");
   let navigate = useNavigate();
-
-  let jsonData = JSON.parse(date);
   const location = useLocation();
+  const [add, setAdd] = useState();
+
+  useEffect(() => {
+    if (!location.state) {
+      navigate(`/`);
+    }
+  }, []);
+  let jsonData = JSON.parse(date);
+
+  const startDate = new Date(jsonData.from);
+  const endDate = new Date(jsonData.to);
+const [days,setDays]=useState(
+    Math.round((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1
+)
 
   const [totalprice, setTotalprice] = useState(
-    location.state.price + location.state?.securityDeposit
+    location.state?.price + location.state?.securityDeposit * parseInt(days)
   );
+ 
   UseUserToken();
   localStorage.getItem("user");
   const [rating, setRating] = useState({
@@ -31,7 +44,7 @@ function SingleCycle() {
     axios
       .post(`/review/userBooked`, {
         token: localStorage.getItem("user"),
-        cycle: location.state._id,
+        cycle: location.state?._id,
       })
       .then(() => {
         setUserBooked(true);
@@ -39,31 +52,32 @@ function SingleCycle() {
         axios
           .post(`/review/getUserReview`, {
             token: localStorage.getItem("user"),
-            productId: location.state._id,
+            productId: location.state?._id,
           })
           .then(() => {
             setMessage(() => false);
           })
           .catch((error) => {
-            console.log(error.response.data);
+            console.log(error.response?.data);
             setMessage(true);
           });
       })
       .catch((error) => {
-        console.log(error.response.data);
+        console.log(error.response?.data);
         setUserBooked(false);
       });
+
     axios
       .post(`/review/getReviews`, {
-        productId: location.state._id,
+        productId: location.state?._id,
       })
-      .then(() => {
+      .then((data) => {
         setReview(data.data);
       })
       .catch((error) => {
-        console.log(error.response.data);
+        console.log(error);
       });
-  }, [message]);
+  }, [message, add]);
 
   const handleSubmit = (e) => {
     setMessage(() => false);
@@ -72,11 +86,13 @@ function SingleCycle() {
     axios
       .post(`/review/newReview`, {
         token: localStorage.getItem("user"),
-        product: location.state._id,
+        product: location.state?._id,
         stars: rating.starRating,
         message: rating.review,
       })
-      .then((data) => {});
+      .then(() => {
+        setAdd(true);
+      });
   };
 
   function accessories() {
@@ -127,6 +143,7 @@ function SingleCycle() {
       </>
     );
   }
+ 
   const rentHandler = (data) => {
     data.forEach((data) => {
       let storedData = JSON.parse(localStorage.getItem("accessories"));
@@ -144,27 +161,13 @@ function SingleCycle() {
     if (data) {
       let price = 0;
       price = data?.reduce((sum, element) => {
-        // sum += +element.price
         return (sum = +sum + +element.price);
       }, 0);
-      const date1 = new Date(jsonData.to);
-      const date2 = new Date(jsonData.from);
-
-      const timestamp1 = date1.getTime();
-      const timestamp2 = date2.getTime();
-
-      const difference = timestamp2 - timestamp1;
-
-      const result = difference / 86400000;
-      let adddate;
-      if (result === 0) {
-        adddate = result + 1;
-      } else {
-        adddate = result;
-      }
-
+     console.log(price);
       setTotalprice(
-        price + location.state.price + location.state?.securityDeposit * adddate
+        price +
+          location.state?.price +
+          location.state?.securityDeposit *days
       );
     }
   };
@@ -172,6 +175,15 @@ function SingleCycle() {
   let sucess = location.state?._id + 752;
 
   const handlePaymentSuccess = () => {
+    let data = localStorage.getItem("accessories");
+    let accessorieData = JSON.parse(data);
+    let bookedData = {
+      cycle: location.state,
+      accessories: accessorieData,
+      fromDate: jsonData.from,
+      toDate: jsonData.to,
+      totalPrice: totalprice,
+    };
     setUserBooked(true);
     setMessage(true);
     const token = localStorage.getItem("user");
@@ -186,20 +198,16 @@ function SingleCycle() {
           },
         }
       )
-      .then(() => {
-        localStorage.removeItem("accessories");
+      .then((data) => {
+        console.log(data.data);
+        if (data.data === "booked") {
+          localStorage.removeItem("accessories");
+        }
       });
+    navigate(location.pathname, { replace: true, state: null });
     navigate(`/sucess/${sucess}`);
   };
-  let data = localStorage.getItem("accessories");
-  let accessorieData = JSON.parse(data);
-  let bookedData = {
-    cycle: location.state,
-    accessories: accessorieData,
-    fromDate: jsonData.from,
-    toDate: jsonData.to,
-    totalPrice: totalprice,
-  };
+
   let cancle = location.state?._id + 100;
   let errors = location.state?._id + 100;
   return (
@@ -278,7 +286,7 @@ function SingleCycle() {
           </div>
 
           <div className="flex flex-col md:flex-row md:p-5 justify-between ">
-            <div className="md:w-1/2 md:pr-3">
+            <div className="md:w-1/2 md:pr-3 ">
               {
                 <Modal
                   modal={
@@ -309,7 +317,10 @@ function SingleCycle() {
 
             <div className="z-0 md:w-1/2 pt-2">
               <PayPalScriptProvider
-                options={{ "client-id": 'AUph16OQlgs0Af8jR_YZyxgY88VLPyPVk_qU_MJUZ1O0b9y4VZ0Zxb7wFcxDd3n5YufGHhRTbSuFytNW' }}
+                options={{
+                  "client-id":
+                    "AUph16OQlgs0Af8jR_YZyxgY88VLPyPVk_qU_MJUZ1O0b9y4VZ0Zxb7wFcxDd3n5YufGHhRTbSuFytNW",
+                }}
               >
                 <PayPalButtons
                   style={{
@@ -347,61 +358,60 @@ function SingleCycle() {
       <div className="p-10">
         <div className="flex justify-between">
           <h1 className="pl-1">Reviews</h1>
-          {
-!userBooked ? (
-  <div className="cursor-text ">
-    you haven't purchased this product yet
-  </div>
-) : !message ? (
-  <div className="cursor-text">You allready added</div>
-) :
-          <Modal
-            modal={starReview()}
-            button={
-               <button className=" bg-boxColor p-2 rounded-xl hover:bg-slate-500" >ADD REVIEW</button>
-                
-              
-            }
-          />
-          }
+          {!userBooked ? (
+            <div className="cursor-text ">
+              you haven't purchased this product yet
+            </div>
+          ) : !message ? (
+            <div className="cursor-text">You allready added</div>
+          ) : (
+            <Modal
+              modal={starReview()}
+              button={
+                <button className=" bg-boxColor p-2 rounded-xl hover:bg-slate-500">
+                  ADD REVIEW
+                </button>
+              }
+            />
+          )}
         </div>
         <hr className="  my-2  bg-gray-200 border-1 dark:bg-gray-700" />
-        { review?.length?
-        review?.map((data) => {
-          return (
-            
-            <>
-            {
-            <>
-            <div className="grid md:grid-cols-3 grid-row   mx-auto ">
-                <div className="p-5">{data?.user?.name}</div>
-                <div className="flex p-5 ">
-                  {Array.from({ length: data.stars }).map((_, index) => (
-                    <svg
-                      key={index}
-                      className="h-5 w-5 ml-1 text-[#ffbe0c]"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    >
-                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                    </svg>
-                  ))}
-                </div>
-                <div className="p-5">{data?.message}</div>
-              </div>
-              <hr className="  my-2  bg-gray-200 border-1 dark:bg-gray-700" /> </>
-
-            }
-              
-            </>
-          );
-        }) :<div className="w-full "> 
-          <h1 className="text-center mt-10">THERE IS NO REVIEW YET</h1>
-        </div>
-        }
+        {review?.length ? (
+          review?.map((data) => {
+            return (
+              <>
+                {
+                  <>
+                    <div className="grid md:grid-cols-3 grid-row   mx-auto ">
+                      <div className="p-5">{data?.user?.name}</div>
+                      <div className="flex p-5 ">
+                        {Array.from({ length: data.stars }).map((_, index) => (
+                          <svg
+                            key={index}
+                            className="h-5 w-5 ml-1 text-[#ffbe0c]"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                          >
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                          </svg>
+                        ))}
+                      </div>
+                      <div className="p-5">{data?.message}</div>
+                    </div>
+                    <hr className="  my-2  bg-gray-200 border-1 dark:bg-gray-700" />{" "}
+                  </>
+                }
+              </>
+            );
+          })
+        ) : (
+          <div className="w-full ">
+            <h1 className="text-center mt-10">THERE IS NO REVIEW YET</h1>
+          </div>
+        )}
       </div>
     </div>
   );

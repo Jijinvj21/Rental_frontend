@@ -3,6 +3,8 @@ import Modal from "../Table/Modal";
 import axios from "../../instance/axios";
 import Messages from "../chat/Messages";
 import { io } from "socket.io-client";
+import { toast } from "react-toastify";
+import { chatSchema } from "../../validation/validation";
 
 function Userchat() {
   const [message, setMessage] = useState();
@@ -15,7 +17,9 @@ function Userchat() {
   const data = JSON.parse(userData);
 
   useEffect(() => {
-    socket.current = io('ws://localhost:9000');
+    // socket.current = io("ws://localhost:9000");
+    socket.current = io("https://rental-api.jijinvj.tech");
+
     socket.current.on("getMessage", ({ senderId, message, sender }) => {
       setArrivelMsg({
         senderId,
@@ -25,7 +29,7 @@ function Userchat() {
       });
     });
   }, []);
-  
+
   useEffect(() => {
     if (arrivalMsg) {
       setMessage((prev) => {
@@ -40,11 +44,9 @@ function Userchat() {
       });
     }
   }, [arrivalMsg]);
-  
 
   useEffect(() => {
     socket.current.emit("addUser", { userId: data?._id, role: "user" });
-  
   }, []);
 
   useEffect(() => {
@@ -83,36 +85,41 @@ function Userchat() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    chatSchema
+      .validate({ inputField: newMessage })
+      .then(() => {
+        //socket
+        socket.current.emit("send-message", {
+          userId: data?._id,
+          message: newMessage,
+          sender: "user",
+        });
 
-    //socket
-    socket.current.emit("send-message", {
-      
-      userId: data?._id,
-      message: newMessage,
-      sender: "user",
-    });
-
-    axios
-      .post("/chat/addMessage", {
-        conversationId: conversationId,
-        sender: data?._id,
-        text: newMessage,
-      })
-      .then((response) => {
         axios
-          .post("/chat/getMessage", {
+          .post("/chat/addMessage", {
             conversationId: conversationId,
-            userId: data?._id,
+            sender: data?._id,
+            text: newMessage,
           })
-          .then((response) => {
-            setMessage(response.data);
+          .then(() => {
+            axios
+              .post("/chat/getMessage", {
+                conversationId: conversationId,
+                userId: data?._id,
+              })
+              .then((response) => {
+                setMessage(response.data);
+              })
+              .catch((error) => {
+                console.error(error);
+              });
           })
           .catch((error) => {
             console.error(error);
           });
       })
       .catch((error) => {
-        console.error(error);
+        toast(`${error.message}`);
       });
   };
 
@@ -161,7 +168,7 @@ function Userchat() {
         <div className="flex justify-center">
           <textarea
             onChange={(e) => setNewMessage(e.target.value)}
-            className="h-14 w-1/2  resize-none outline-none text-xs md:text-sm    bg-bgColor rounded-xl p-2 scrollbar scrollbar-thumb-boxColor scrollbar-thumb-rounded-full scrollbar-w-3 "
+            className="h-14 w-1/2  resize-none outline-none text-xs md:text-sm bg-bgColor rounded-xl p-2 scrollbar scrollbar-thumb-boxColor scrollbar-thumb-rounded-full scrollbar-w-3 "
             placeholder="Write something..."
             type="text"
           />
@@ -184,7 +191,3 @@ function Userchat() {
 }
 
 export default Userchat;
-
-
-
-

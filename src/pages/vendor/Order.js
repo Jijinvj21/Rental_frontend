@@ -127,7 +127,7 @@ function Order() {
   });
 
   return (
-    <div className="overflow-auto h-screen  w-screen ">
+    <div className="overflow-auto h-screen  max-w-[350px] md:min-w-full">
       <h1 className="text-center pt-10 text-3xl">BOOKING LIST</h1>
       <Filter props={"booking"} />
       <User

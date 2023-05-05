@@ -21,7 +21,7 @@ function Order() {
   }
   function accessoriesModal(accessories) {
     return (
-      <div className="flex flex-col  gap-4 py-5 ">
+      <div className="flex flex-col  gap-4 py-5 overflow-auto h-[600px] ">
         <div className="grid grid-cols-2 ">
           {accessories?.map((data) => {
             return (
@@ -88,7 +88,7 @@ function Order() {
     <div className=" pt-14 ">
             <h1 className="text-center text-2xl pt-10">BOOKING LIST</h1>
 
-      <Filter props={"booking"} limit={""} />
+      <Filter props={"booking"} limit={200} />
       <User
         users={table}
         items={true}

@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function SuccessMessage() {
+  
   return (
     <div className=" ">
       <div className="mx-auto max-w-lg">

@@ -43,16 +43,16 @@ function Accessories(props) {
     if (selectedItems) props?.rentHandler?.(selectedItems);
   }, [selectedItems]);
   return accessories.length === 0 ? (
-    <div className=" w-full">
+    <div className=" w-full ">
       <h1 className="text-center">ON ACCESSORIES</h1>
     </div>
   ) : (
-    <div className="flex flex-col  gap-4 py-5">
+    <div className="flex flex-col overflow-auto h-[650px] gap-4 py-5">
       <div className="grid grid-cols-2 ">
         {accessories.map((data) => {
           return (
             <>
-              <img src={data.image} alt="new" className="w-3/4   rounded-2xl" />
+              <img src={data.image} alt="new" className="w-3/4 p-3  rounded-2xl" />
               <div className="text-left flex-row">
                 <h1 className="mt-1">Name:{data.name}</h1>
                 <h1 className="mt-1">Size:{data.size}</h1>

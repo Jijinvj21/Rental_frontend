@@ -13,7 +13,7 @@ function Messages({ own, Messages }) {
               <div className="min-w-fit">
                 <img
                   className="rounded-full mt-1 w-6 h-6 md:w-10 md:h-10 "
-                  src={data.image}
+                  src={data?.image}
                   alt="user Img"
                 />
               </div>
@@ -26,7 +26,7 @@ function Messages({ own, Messages }) {
                 alt="user Img"
               />
             )}
-            <p className="bg-boxColor m-1 py-1 pl-2 pr-1 rounded-xl break-words md:text-lg  text-xs">
+            <p className="bg-boxColor m-1 py-1 pl-2 pr-2 rounded-xl break-words max-w-[200px] md:text-lg  text-xs">
               {Messages?.text}{" "}
             </p>
           </div>

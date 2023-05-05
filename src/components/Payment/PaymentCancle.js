@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function PaymentCancle() {
+
+
   return (
     <div className=" ">
       <div className="mx-auto max-w-lg">

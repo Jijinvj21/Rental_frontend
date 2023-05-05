@@ -33,7 +33,7 @@ function Filter(props) {
       try {
         const userDate = localStorage.getItem("userDate");
         const date = JSON.parse(userDate);
-  
+
         const url = await axios.post(
           `/filter/filter?page=${
             tableManagement.page ? tableManagement.page : ""
@@ -46,7 +46,7 @@ function Filter(props) {
           }&order=${
             tableManagement.order ? tableManagement.order : ""
           }&search=${tableManagement.search}&limit=${
-            tableManagement.limit ? tableManagement.limit : ""
+          props?.limit === 200?props?.limit:  tableManagement.limit ? tableManagement.limit : ""
           }&tokenOf=${partinlowercase}&state=${
             props?.state ? props?.state : ""
           }&fromDate=${date.from}&toDate=${date.to}`,
@@ -58,15 +58,7 @@ function Filter(props) {
             },
           }
         );
-        console.log(url.data.user.length);
-        // if(url.data.user.length !==0 ){
-        //   alert(11)
-        //   dispatch(loading(true));
-        // }else{
-        //   alert(99)
-        //   dispatch(loading(false));
 
-        // }
         dispatch(loading(false));
 
         dispatch(data(url?.data));

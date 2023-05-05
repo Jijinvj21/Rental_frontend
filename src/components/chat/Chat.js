@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "../../instance/axios";
-
+import { chatSchema } from "../../validation/validation";
 import { io } from "socket.io-client";
 
 import Conversation from "./Conversation";
 import Pagination from "../Table/Pagination";
 import Modal from "../Table/Modal";
 import Messages from "./Messages";
+import { toast } from "react-toastify";
 
 function Chat() {
   const admin = localStorage.getItem("admin");
@@ -24,7 +25,11 @@ function Chat() {
   const [arrivalMsg, setArrivelMsg] = useState(null);
   const [msg, setMsg] = useState([]);
   const [userId, setUserId] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
+  useEffect(() => {
+    setIsOpen(true);
+  }, [msg]);
   socket.current?.on("getMessage", ({ senderId, message, sender }) => {
     if (senderId === userId ? userId : currentChat.userId)
       setArrivelMsg({
@@ -36,7 +41,8 @@ function Chat() {
   });
 
   useEffect(() => {
-    socket.current = io("ws://localhost:9000");
+    // socket.current = io("ws://localhost:9000");
+    socket.current = io("https://rental-api.jijinvj.tech");
   }, [userId]);
   useEffect(() => {
     arrivalMsg && setMsg((prev) => [...prev, arrivalMsg]);
@@ -70,25 +76,30 @@ function Chat() {
       })
       .then((response) => {
         setConversationId(response.data.conversationId);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    axios
-      .post("chat/getMessage", {
-        conversationId: conversationId,
-        userId: id ? id : currentChat.userId,
-      })
-      .then((response) => {
-        setCurrentChat({
-          ...currentChat,
+        axios
+        .post("chat/getMessage", {
+          conversationId: response.data.conversationId,
           userId: id ? id : currentChat.userId,
+        })
+        .then((response) => {
+          console.log(response);
+          setCurrentChat({
+            ...currentChat,
+            userId: id ? id : currentChat.userId,
+          });
+          setMsg(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
         });
-        setMsg(response.data);
+
+
       })
       .catch((error) => {
         console.error(error);
       });
+      console.log(id);
+    
   }
 
   function userList() {
@@ -142,31 +153,38 @@ function Chat() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //socket
-    socket.current.emit("send-message", {
-      userId: currentChat.userId,
-      message: newMessage,
-      sender: "admin",
-    });
+    chatSchema
+      .validate({ inputField: newMessage })
+      .then(async (data) => {
+        //socket
+        socket.current.emit("send-message", {
+          userId: currentChat.userId,
+          message: newMessage,
+          sender: "admin",
+        });
 
-    axios
-      .post("/chat/addMessage", {
-        conversationId: conversationId,
-        sender: currentChat.userId,
-        admin: "63a1e1dd25d76e188ff8c157",
-        text: newMessage,
-      })
-      .then((response) => {
-        setUsers(() => [response.data]);
-        modalClose();
+        axios
+          .post("/chat/addMessage", {
+            conversationId: conversationId,
+            sender: currentChat.userId,
+            admin: "63a1e1dd25d76e188ff8c157",
+            text: newMessage,
+          })
+          .then((response) => {
+            setUsers(() => [response.data]);
+            modalClose();
+          })
+          .catch((error) => {
+            console.error(error);
+          });
       })
       .catch((error) => {
-        console.error(error);
+        toast(`${error.message}`);
       });
   };
 
   return (
-    <div className="flex justify-center items-center w-1/2 mx-auto my-auto h-screen">
+    <div className="flex justify-center items-center w-3/4 md:w-1/2 mx-auto my-auto h-screen">
       <div
         className={
           msg
@@ -175,7 +193,12 @@ function Chat() {
         }
       >
         <div className="m-5">
-          <Modal modal={user()} button={userList()} />
+          <Modal
+            modal={user()}
+            button={userList()}
+            setIsOpen={setIsOpen}
+            isOpen={isOpen}
+          />
         </div>
         {msg.length ? (
           <>
@@ -183,15 +206,19 @@ function Chat() {
               {
                 msg
                   ? msg?.map((data) => {
-                      return (
-                        <div ref={scrollRef}>
-                          <Messages
-                            Messages={data}
-                            userData={"chatUserData"}
-                            own={data.admin}
-                          />
-                        </div>
-                      );
+                      if (data.sender !== "admin") {
+                        return (
+                          <div ref={scrollRef}>
+                            <Messages
+                              Messages={data}
+                              userData={"chatUserData"}
+                              own={data.sender !== "admin"}
+                            />
+                          </div>
+                        );
+                      }
+
+                      return null;
                     })
                   : ""
                 // })

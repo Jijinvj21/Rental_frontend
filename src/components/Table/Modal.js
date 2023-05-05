@@ -9,13 +9,13 @@ function Modal(props) {
   const closeModal = () => {
     setIsOpen(false);
 
-    props.setIsOpen(false);
+    props?.setIsOpen(false);
   };
   useEffect(() => {
-    if (props.isOpen) {
+    if (props?.isOpen) {
       closeModal();
     }
-  }, [props.isOpen]);
+  }, [props?.isOpen]);
   return (
     <div className="relative">
       <button

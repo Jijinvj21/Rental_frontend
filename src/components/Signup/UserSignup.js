@@ -48,8 +48,7 @@ function UserSIgnup(props) {
         .catch((ValidationError) => {
           toast(`${ValidationError.message}`);
         });
-    } catch (err) {
-    }
+    } catch (err) {}
   };
   return (
     <div className=" container-fluid  ">

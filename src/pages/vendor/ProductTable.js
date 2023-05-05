@@ -242,7 +242,6 @@ function UserTable() {
   }
 
   function edit() {
-
     const datas = { image: image, inputData: inputData };
     const handleSubmit = async (e) => {
       e.preventDefault();

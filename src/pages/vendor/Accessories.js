@@ -417,7 +417,7 @@ function UserTable() {
   });
 
   return (
-    <div className="overflow-auto h-screen" style={{ width: "100%" }}>
+    <div className="overflow-auto h-screen max-w-[350px] md:min-w-full">
       <h1 className="text-center pt-10 text-3xl">ACCESSORIES LIST</h1>
       <User
         users={table}
