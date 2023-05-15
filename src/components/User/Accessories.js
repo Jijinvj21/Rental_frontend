@@ -4,6 +4,8 @@ import UseUserToken from "../../customeHooks/useUserToken";
 import { toast } from "react-toastify";
 
 function Accessories(props) {
+  console.log(props.data.vendor);
+  const vendor = props.data.vendor
   UseUserToken();
   const [accessories, setAccessories] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
@@ -12,17 +14,17 @@ function Accessories(props) {
     accessories: selectedItems,
   };
   useEffect(() => {
-    const token = localStorage.getItem("vendor");
+    // const token = localStorage.getItem("vendor");
     axios
       .post(
         `/vendorAccessories`,
-        { data },
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/json",
-          },
-        }
+         {vendor} ,
+        // {
+        //   headers: {
+        //     Authorization: "Bearer " + token,
+        //     "Content-Type": "application/json",
+        //   },
+        // }
       )
       .then((data) => {
         setAccessories(data?.data?.accessories);

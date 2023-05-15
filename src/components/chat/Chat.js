@@ -4,7 +4,6 @@ import { chatSchema } from "../../validation/validation";
 import { io } from "socket.io-client";
 
 import Conversation from "./Conversation";
-import Pagination from "../Table/Pagination";
 import Modal from "../Table/Modal";
 import Messages from "./Messages";
 import { toast } from "react-toastify";
@@ -16,7 +15,6 @@ function Chat() {
   const [users, setUsers] = useState([]);
   // const [socket, setSocket] = useState(null)
   const [currentChat, setCurrentChat] = useState({
-    // userChat: null,
     userId: null,
   });
   const [newMessage, setNewMessage] = useState();
@@ -31,6 +29,7 @@ function Chat() {
     setIsOpen(true);
   }, [msg]);
   socket.current?.on("getMessage", ({ senderId, message, sender }) => {
+    
     if (senderId === userId ? userId : currentChat.userId)
       setArrivelMsg({
         senderId,
@@ -82,7 +81,6 @@ function Chat() {
           userId: id ? id : currentChat.userId,
         })
         .then((response) => {
-          console.log(response);
           setCurrentChat({
             ...currentChat,
             userId: id ? id : currentChat.userId,
@@ -98,7 +96,6 @@ function Chat() {
       .catch((error) => {
         console.error(error);
       });
-      console.log(id);
     
   }
 
@@ -143,9 +140,7 @@ function Chat() {
               );
             })}
           </div>
-          <div className="mt-2">
-            <Pagination />
-          </div>
+      
         </div>
       </div>
     );
@@ -212,7 +207,7 @@ function Chat() {
                             <Messages
                               Messages={data}
                               userData={"chatUserData"}
-                              own={data.sender !== "admin"}
+                              own={data.admin !== "63a1e1dd25d76e188ff8c157"}
                             />
                           </div>
                         );
